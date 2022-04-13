@@ -9,6 +9,7 @@ def sum_multiples(target, factors)
     end
   end
   multiples.uniq.sum
+  # alternative is multiples.uniq.inject(0, :+)
 end
 
 # Test cases
