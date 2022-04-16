@@ -62,15 +62,12 @@ end
 
 def operation_to_message(operator)
   case (operator)
-  when "1"
-    "Adding"
-  when "2"
-    "Subtracting"
-  when "3"
-    "Multiplying"
-  when "4"
-    "Dividing"
+  when "1" then msg = "Adding"
+  when "2" then msg = "Subtracting"
+  when "3" then msg = "Multiplying"
+  when "4" then msg = "Dividing"
   end
+  msg
 end
 
 prompt "Calculator"
