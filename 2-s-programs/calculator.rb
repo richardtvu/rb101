@@ -1,22 +1,14 @@
+require "./regex_number_validator.rb"
+
 def prompt(msg)
   puts "=> #{msg}"
-end
-
-def valid_number?(number)
-  if number == "0"
-    return true
-  end
-  if number.to_i == 0
-    return false
-  end
-  true
 end
 
 def get_valid_num(order)
   loop do
     prompt "#{order} number?"
     num = gets.chomp
-    return num.to_i if valid_number?(num)
+    return num.to_i if Validator.number?(num)
     prompt "Invalid number. Try again"
   end
 end
