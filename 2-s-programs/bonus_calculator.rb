@@ -3,7 +3,8 @@ def prompt(message)
 end
 
 def valid_number?(num)
-  num.to_i != 0
+  return true if num.to_s == '0'
+  num.to_i != 0 ? true : false 
 end
 
 def operation_to_message(op)
