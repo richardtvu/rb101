@@ -2,7 +2,9 @@
 Suppose we're building a scientific calculator,
 and we now need to account for inputs that include decimals.
 How can we build a validating method, called number?,
-to verify that only valid numbers -- integers or floats -- are entered?
+to verify that only valid numbers -- integers or floats -- are entered? 
+
+The contained method will validate integers/floats. 
 
 Problem:
   Input: String
