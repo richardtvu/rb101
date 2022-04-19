@@ -2,10 +2,17 @@ def prompt(message)
   puts "=> #{message}"
 end
 
-def valid_number?(num)
-  return true if num.to_s == '0'
-  num.to_i != 0 ? true : false 
+# See notes-and-misc/number_validator.rb for PEDAC approach and test cases. 
+def valid_number?(input)
+    # In case the input isn't already a string.
+    input = input.to_s
+    obj = /^[-|+]?\d*(\.?\d*)?$/.match(input) &&
+          # Prevents '+' or '-' from returning false positive.
+          !/^[-|+]+$/.match(input)
+    obj ? true : false
 end
+
+
 
 def operation_to_message(op)
   message = case op
@@ -83,9 +90,12 @@ loop do # main loop
 
   prompt "#{operation_to_message(operator)} the two numbers ..."
 
+
+
+  # What about when num1 or num2 are floats? 
   result = case operator
            when "1"
-             number1.to_i + number2.to_i
+             number1.to_f + number2.to_i
            when "2"
              number1.to_i - number2.to_i
            when "3"

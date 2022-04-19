@@ -8,7 +8,7 @@ The contained method will validate integers/floats.
 
 Problem:
   Input: String
-  Output: Boolean - True/fa lse
+  Output: Boolean - True/false
 
   Requirements:
     - A string that contains a valid integer or float will return true.
@@ -42,18 +42,24 @@ Algorithm:
 - ELSE
   - Return false.
 
-  - /^[-+]?\d*.?\d*$/
 
 =end
 class Validator
   def self.number?(input)
     # In case the input isn't already a string.
     input = input.to_s
-    obj = /^[-|+]?\d*(\.?\d*)?$/.match(input) &&
-          # Prevents '+' or '-' from returning false positive.
-          !/^[-|+]+$/.match(input)
+    obj = Validator.integer?(input) || Validator.float?(input) 
     obj ? true : false
   end
+  def self.integer?(input) 
+    obj = /^[-+]?\d+$/.match(input)
+  end 
+
+  def self.float?(input)
+    obj = /^[-|+]?\d*\.\d*$/.match(input) 
+  end 
+
+
 end
 
 # Test Cases
