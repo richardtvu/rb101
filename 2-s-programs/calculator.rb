@@ -4,9 +4,9 @@ MESSAGES = YAML.load_file('messages.yml')
 # This calculator program supports English, 'en'
 # and Spanish, 'es'.
 
-LANGUAGE = 'en' 
+LANGUAGE = 'en'
 
-# Methods 
+# Methods
 
 def messages(message, lang=LANGUAGE)
   MESSAGES[lang][message]
@@ -30,6 +30,21 @@ def float?(input)
   /^[-|+]?\d*\.\d*$/.match(input)
 end
 
+def get_valid_number(request_num)
+  num = "" 
+  loop do
+    prompt messages(request_num)
+    num = gets.chomp
+
+    if valid_number?(num)
+      break
+    else
+      prompt messages("not_valid_number")
+    end
+  end
+  num
+end
+
 def any_are_floats(*nums)
   nums.each { |num| return true if float?(num) }
   false
@@ -38,18 +53,18 @@ end
 def operation_to_message(op)
   message = case op
             when "1"
-              "Adding"
+              messages("adding")
             when "2"
-              "Subtracting"
+              messages("subtracting")
             when "3"
-              "Multiplying"
+              messages("multiplying")
             when "4"
-              "Dividing"
+              messages("dividing")
             end
   message
 end
 
-# MAIN program 
+# MAIN program
 
 prompt messages("welcome")
 prompt messages("name")
@@ -67,29 +82,29 @@ end
 prompt "#{messages('greet')} #{name}!"
 
 loop do # main loop
-  number1 = ""
-  loop do
-    prompt messages("first_num")
-    number1 = gets.chomp
+  number1 = get_valid_number("first_num")
+  # loop do
+  #   prompt messages("first_num")
+  #   number1 = gets.chomp
 
-    if valid_number?(number1)
-      break
-    else
-      prompt messages("not_valid_number")
-    end
-  end
+  #   if valid_number?(number1)
+  #     break
+  #   else
+  #     prompt messages("not_valid_number")
+  #   end
+  # end
 
-  number2 = ""
-  loop do
-    prompt messages("second_num")
-    number2 = gets.chomp
+  number2 = get_valid_number("second_num")
+  # loop do
+  #   prompt messages("second_num")
+  #   number2 = gets.chomp
 
-    if valid_number?(number2)
-      break
-    else
-      prompt messages("not_valid_number")
-    end
-  end
+  #   if valid_number?(number2)
+  #     break
+  #   else
+  #     prompt messages("not_valid_number")
+  #   end
+  # end
 
   prompt messages('operator_prompt')
 

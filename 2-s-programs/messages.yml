@@ -12,14 +12,19 @@ en:
     2) subtract 
     3) multiply 
     4) divide
+  adding: "Adding"
+  subtracting: "Subtracting"
+  multiplying: "Multiplying"
+  dividing: "Dividing"
   two_numbers: "the two numbers"
   choices: "Must choose 1, 2, 3, or 4"
-  result_is: "The result is "
+  result_is: "The result is"
   calculate_again: "Do you want to perform another calculation? (Y to calculate again)"
   good_bye: "Thank you for using the calculator. Good bye!"
 es: 
   welcome: "Bienvenido a la calculadora! Entre su nombre:"
   valid_name: "Asegúrese de entrar un nombre válido."
+  name: "¿Cómo te llamas?" 
   # Rest of these are machine translated by Google Translate. 
   greet: "Hola"
   first_num: "¿Cuál es el primer número?"
@@ -31,6 +36,10 @@ es:
       2) restar
       3) multiplicar
       4) dividir
+  adding: "Agregando"
+  subtracting: "Restando"
+  multiplying: "Multiplicando"
+  dividing: "Dividiendo"
   two_numbers: "los dos números"
   choices: "Debe elegir 1, 2, 3 o 4"
   result_is: "El resultado es"
