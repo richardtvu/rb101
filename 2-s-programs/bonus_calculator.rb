@@ -1,8 +1,12 @@
 require 'yaml'
 
-MESSAGES = YAML.load_file('calculator_messages.yml')
+MESSAGES = YAML.load_file('messages.yml')
 
-def prompt(message, _language = 'en')
+def messages(message, lang='en')
+  MESSAGES[lang][message]
+end
+
+def prompt(message)
   puts "=> #{message}"
 end
 
@@ -39,47 +43,47 @@ def operation_to_message(op)
   message
 end
 
-prompt MESSAGES["welcome"]
-prompt MESSAGES["name"]
+prompt messages("welcome")
+prompt messages("name")
 
 name = ""
 loop do
   name = gets.chomp
   if name.empty?
-    prompt MESSAGES["valid_name"]
+    prompt messages("valid_name")
   else
     break
   end
 end
 
-prompt "#{MESSAGES['greet']} #{name}!"
+prompt "#{messages('greet')} #{name}!"
 
 loop do # main loop
   number1 = ""
   loop do
-    prompt MESSAGES["first_num"]
+    prompt messages("first_num")
     number1 = gets.chomp
 
     if valid_number?(number1)
       break
     else
-      prompt MESSAGES["not_valid_number"]
+      prompt messages("not_valid_number")
     end
   end
 
   number2 = ""
   loop do
-    prompt MESSAGES["second_num"]
+    prompt messages("second_num")
     number2 = gets.chomp
 
     if valid_number?(number2)
       break
     else
-      prompt MESSAGES["not_valid_number"]
+      prompt messages("not_valid_number")
     end
   end
 
-  prompt MESSAGES['operator_prompt']
+  prompt messages('operator_prompt')
 
   operator = ""
   loop do
@@ -87,11 +91,11 @@ loop do # main loop
     if %w(1 2 3 4).include?(operator)
       break
     else
-      prompt MESSAGES["choices"]
+      prompt messages("choices")
     end
   end
 
-  prompt "#{operation_to_message(operator)} #{MESSAGES['two_numbers']}"
+  prompt "#{operation_to_message(operator)} #{messages('two_numbers')}"
 
   if any_are_floats(number1, number2)
     number1 = number1.to_f
@@ -112,10 +116,10 @@ loop do # main loop
              number1.to_f / number2.to_f
            end
 
-  prompt "#{MESSAGES['result_is']} #{result}"
-  prompt MESSAGES["calculate_again"]
+  prompt "#{messages('result_is')} #{result}"
+  prompt messages("calculate_again")
   answer = gets.chomp
   break unless answer.downcase.start_with?("y")
 end
 
-prompt MESSAGES["good_bye"]
+prompt messages("good_bye")
