@@ -31,7 +31,7 @@ def float?(input)
 end
 
 def get_valid_number(request_num)
-  num = "" 
+  num = ""
   loop do
     prompt messages(request_num)
     num = gets.chomp
@@ -83,31 +83,9 @@ prompt "#{messages('greet')} #{name}!"
 
 loop do # main loop
   number1 = get_valid_number("first_num")
-  # loop do
-  #   prompt messages("first_num")
-  #   number1 = gets.chomp
-
-  #   if valid_number?(number1)
-  #     break
-  #   else
-  #     prompt messages("not_valid_number")
-  #   end
-  # end
-
   number2 = get_valid_number("second_num")
-  # loop do
-  #   prompt messages("second_num")
-  #   number2 = gets.chomp
-
-  #   if valid_number?(number2)
-  #     break
-  #   else
-  #     prompt messages("not_valid_number")
-  #   end
-  # end
 
   prompt messages('operator_prompt')
-
   operator = ""
   loop do
     operator = gets.chomp
@@ -119,7 +97,6 @@ loop do # main loop
   end
 
   prompt "#{operation_to_message(operator)} #{messages('two_numbers')}"
-
   if any_are_floats(number1, number2)
     number1 = number1.to_f
     number2 = number2.to_f
