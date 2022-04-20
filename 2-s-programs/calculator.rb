@@ -1,8 +1,14 @@
 require 'yaml'
 
 MESSAGES = YAML.load_file('messages.yml')
+# This calculator program supports English, 'en'
+# and Spanish, 'es'.
 
-def messages(message, lang='en')
+LANGUAGE = 'en' 
+
+# Methods 
+
+def messages(message, lang=LANGUAGE)
   MESSAGES[lang][message]
 end
 
@@ -42,6 +48,8 @@ def operation_to_message(op)
             end
   message
 end
+
+# MAIN program 
 
 prompt messages("welcome")
 prompt messages("name")
