@@ -22,7 +22,7 @@ def valid_number?(input)
   integer?(input) || float?(input)
 end
 
-# Integers can have 0 or 1 plus or minus symbol.
+# Integers can have 0 or 1 plus or minus. 
 # Integers must have 1+ digits with no other characters.
 def integer?(input)
   /^[-+]?\d+$/.match(input)
