@@ -1,5 +1,10 @@
 en:
-  welcome: "Welcome to Calculator! Enter your name:"
+  welcome: |
+    Welcome to Calculator!
+    -------------------------
+    You can add, subtract, multiply, or divide two numbers.  
+    
+    Enter your name:
   name: "What's your name?" 
   greet: "Hi"
   valid_name: "Make sure to use a valid name." 
