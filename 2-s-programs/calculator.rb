@@ -22,12 +22,18 @@ def valid_number?(input)
   integer?(input) || float?(input)
 end
 
+# Integers can have 0 or 1 plus or minus symbol.
+# Integers must have 1+ digits with no other characters.
 def integer?(input)
   /^[-+]?\d+$/.match(input)
 end
 
+# Floats must have a decimal point with at least one number
+# on either side of the decimal.
 def float?(input)
-  /^[-|+]?\d*\.\d*$/.match(input)
+  /^[-|+]?\d*\.\d*$/.match(input) &&
+    # Ensure "+." or "-." is not considered a float.
+    !/^[-|+]?\.$/.match(input)
 end
 
 def get_valid_number(request_num)
@@ -51,17 +57,16 @@ def any_are_floats(*nums)
 end
 
 def operation_to_message(op)
-  message = case op
-            when "1"
-              messages("adding")
-            when "2"
-              messages("subtracting")
-            when "3"
-              messages("multiplying")
-            when "4"
-              messages("dividing")
-            end
-  message
+  case op
+  when "1"
+    messages("adding")
+  when "2"
+    messages("subtracting")
+  when "3"
+    messages("multiplying")
+  when "4"
+    messages("dividing")
+  end
 end
 
 def calculate(num1, op, num2)
@@ -77,7 +82,8 @@ def calculate(num1, op, num2)
   end
 end
 
-# Rounding floats improves user experience (e.g. '42.17' instead of '42.1723812380123')
+# Rounding floats improves user experience
+# e.g. '42.17' instead of '42.17238123803'
 def round_if_float(result, precision=2)
   return result.round(precision) if float?(result.to_s)
   result
