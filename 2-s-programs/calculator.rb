@@ -64,6 +64,12 @@ def operation_to_message(op)
   message
 end
 
+# Rounding floats improves user experience (e.g. '42.17' instead of '42.1723812380123')
+def round_if_float(result, precision=2)
+  return result.round(precision) if float?(result.to_s)
+  result
+end 
+
 # MAIN program
 
 prompt messages("welcome")
@@ -116,7 +122,7 @@ loop do # main loop
              number1.to_f / number2.to_f
            end
 
-  prompt "#{messages('result_is')} #{result}"
+  prompt "#{messages('result_is')} #{round_if_float(result)}"
   prompt messages("calculate_again")
   answer = gets.chomp
   break unless answer.downcase.start_with?("y")

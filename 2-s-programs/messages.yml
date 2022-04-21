@@ -3,8 +3,6 @@ en:
     Welcome to Calculator!
     -------------------------
     You can add, subtract, multiply, or divide two numbers.  
-    
-    Enter your name:
   name: "What's your name?" 
   greet: "Hi"
   valid_name: "Make sure to use a valid name." 
@@ -27,10 +25,13 @@ en:
   calculate_again: "Do you want to perform another calculation? (Y to calculate again)"
   good_bye: "Thank you for using the calculator. Good bye!"
 es: 
-  welcome: "Bienvenido a la calculadora! Entre su nombre:"
+    # Almost of all these were machine translated by Google Translate. 
+  welcome: | 
+    ¡Bienvenido a Calculadora!
+    -------------------------
+    Puede sumar, restar, multiplicar o dividir dos números.
   valid_name: "Asegúrese de entrar un nombre válido."
   name: "¿Cómo te llamas?" 
-  # Rest of these are machine translated by Google Translate. 
   greet: "Hola"
   first_num: "¿Cuál es el primer número?"
   second_num: "¿Cuál es el segundo número?"
