@@ -64,11 +64,24 @@ def operation_to_message(op)
   message
 end
 
+def calculate(num1, op, num2)
+  case op
+  when "1"
+    num1 + num2
+  when "2"
+    num1 - num2
+  when "3"
+    num1 * num2
+  when "4"
+    num1.to_f / num2.to_f
+  end
+end
+
 # Rounding floats improves user experience (e.g. '42.17' instead of '42.1723812380123')
 def round_if_float(result, precision=2)
   return result.round(precision) if float?(result.to_s)
   result
-end 
+end
 
 # MAIN program
 
@@ -111,16 +124,7 @@ loop do # main loop
     number2 = number2.to_i
   end
 
-  result = case operator
-           when "1"
-             number1 + number2
-           when "2"
-             number1 - number2
-           when "3"
-             number1 * number2
-           when "4"
-             number1.to_f / number2.to_f
-           end
+  result = calculate(number1, operator, number2)
 
   prompt "#{messages('result_is')} #{round_if_float(result)}"
   prompt messages("calculate_again")
