@@ -13,7 +13,7 @@ def messages(message, lang=LANGUAGE)
 end
 
 def prompt(message)
-  puts "=> #{message}"
+  puts "=> #{message}\n\n"
 end
 
 # See notes-and-misc/number_validator.rb for PEDAC approach and test cases.
