@@ -31,8 +31,8 @@
   - Minimum APR: 0%
   - Minimum loan term: 1 month 
   - The inputs will come from the user, so make sure to accept user input. 
-  - Convert the loan duration into months and ask the user again if the loan duration is less than 1 month. 
   - Acceptable data types for input: integers or floats.
+  - User may not substitute words for numbers, e.g. "one hundred" is an invalid input.  
   - Precision: 2 decimal places, e.g. "$839.24".   
   - While the calculator is open, allow the user to calculating monthly payments (i.e. once done with one calculation ask the user if they want to calculate another)
 
@@ -108,7 +108,7 @@
 
 ## Negative Test Cases
 
-#### Example #5: 
+#### Example #5: Insufficient Loan Duration
 
 - Inputs: 
   - loan amount: $100,000
@@ -120,7 +120,7 @@
 
 - Notes: 1 month is approximately 0.0833...3 years, so 0.083 years is less than 1 month. 
 
-#### Example #6: 
+#### Example #6: Insufficient Loan Duration
 
 - Inputs: 
   - loan amount: $100,000
@@ -131,7 +131,7 @@
   - "Please enter a loan duration greater than 1 month." 
  
 
-#### Example #6: 
+#### Example #7: Insufficient Loan Amount
 
 - Inputs: 
   - loan amount: -$1
@@ -139,10 +139,29 @@
   - loan duration: 0.123 years, 0 months
 
 - Outputs: 
-  - "Please provide a loan amount greater than $0." 
+  - "Please provide a loan amount greater than or equal to $0." 
 
+#### Example #8: APR Too Low 
 
+- Inputs: 
+  - loan amount: $100
+  - Annual Percentage Rate (apr): -12% 
+  - loan duration: 0.123 years, 0 months
 
+- Outputs: 
+  - "Please provide an Annual Percentage Rate greater than or equal to 0." 
+
+#### Example #9: Non-numeric Input 
+
+- Inputs: 
+  - loan amount: one hundred
+  - Annual Percentage Rate (apr): 12% 
+  - loan duration: 0.123 years, 0 months
+
+- Outputs: 
+  - "This calculator only accepts numbers, e.g. "100", "12.23". 
+
+- Notes: Non-numeric inputs shall not be accepted in the APR or loan duration fields either. 
 
 ## Data Structures
 
