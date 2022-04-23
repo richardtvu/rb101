@@ -4,7 +4,7 @@
 
 - Inputs: 
   - loan amount
-  - Annual Percentage Rate (apr) 
+  - Annual Percentage Rate (APR) 
   - loan duration:
     - years
     - months 
@@ -23,25 +23,21 @@
     - `n` = `loan_duration_months`
   - Run code through rubocop. 
 
-- Implicit Requirements: 
+- Implicit Requirements Based on [calculator.net](https://www.calculator.net/loan-calculator.html?c2loanamount=100000&c2loanterm=10&c2loantermmonth=0&c2interestrate=6&c2compound=annually&x=66&y=11&type=2#intheend): 
   - The money amounts will be prefaced with a symbol, e.g. `$`. If time permits, I could internationalize the program to use country-specific currency symbols, e.g. `€`. 
   - The **monthly interest rate** is the **APR** divided by 12. 
-  - The interest rate will be input as a percentage. 
+  - The interest rate will be input as a percentage (i.e. 5 represents 5% APR). 
   - Minimum Loan Amount: $0
   - Minimum APR: 0%
   - Minimum loan term: 1 month 
   - The inputs will come from the user, so make sure to accept user input. 
-  - Acceptable data types for input: integers or floats. 
+  - Acceptable data types for input: integers or floats.
+  - Precision: 2 decimal places, e.g. "$839.24".   
+  - While the calculator is open, allow the user to calculating monthly payments (i.e. once done with one calculation ask the user if they want to calculate another)
 
 - Questions: 
-  - How will the APR be input, as a decimal? 
-    - As a number, e.g. 5 representing 0.05 in decimal. 
-  - How much precision does the result need to have? 
-    - 2 decimal places, e.g. "$839.24". 
   - What kind of loan is given? 
     - Let's go with an **Amortized Loan**, which involves "paying back a fixed amount periodically" ([calculator.net](https://www.calculator.net/loan-calculator.html?c2loanamount=100000&c2loanterm=10&c2loantermmonth=0&c2interestrate=6&c2compound=annually&x=66&y=11&type=2#intheend)). 
-  - What is the minimum interest rate? 
-    - 0% according to calculator.net. 
 
 
 ## Examples
@@ -167,4 +163,4 @@
 ## Code (with intent) 
 
 ```rb
-def 
+def  
