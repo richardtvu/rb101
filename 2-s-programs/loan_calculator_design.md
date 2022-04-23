@@ -181,17 +181,28 @@
 
 ```rb
 
-# SET country = 'us' (potential for internationalizing calculator)
+# Nice to haves: 
+# # DEFAULT compound_frequency to monthly, 12
+  # Option to use YAML to store different compound rates, e.g.annually, semi-annually, quarterly 
+  # Option to allow for different compound rates? 
+  # e.g. SET compounding_interest_rate = annual_percentage_rate / compound_frequency  
+
+  --------
 
 # SET MIN_LOAN_AMOUNT = 0 
 # SET MIN_ANNUAL_PERCENTAGE_RATE = 0 
 # SET MIN_LOAN_DURATION_MONTHS = 1
 
-
-# GET user input for:
-  # the loan_amount, 
-    # check is a valid number (integer or float) 
-    # validate loan_amount >= MIN_LOAN_AMOUNT 
+# GET user input for the loan_amount, annual_percentage_rate, loan_duration_years.
+# Validate each input:
+  # GET the loan_amount,
+    # IF the loan_amount is NOT a valid number (integer or float) 
+      # OUTPUT "This calculator only accepts numbers, e.g. "100", "12.23". 
+      # GET the loan_amount
+    # ELSE IF loan_amount <= MIN_LOAN_AMOUNT
+      # OUTPUT "Please provide a loan amount greater than or equal to $0."
+    
+  
   # annual_percentage_rate, in % (e.g. 5 is 5%)
     # check is a valid number (integer or float)
     # validate annual_percentage_rate >= MIN_ANNUAL_PERCENTAGE_RATE  
@@ -203,26 +214,23 @@
     # check is a valid number (integer or float)
     # validate loan_duration_months >= 1
 
+# At this point, we've a valid loan: consisting of loan_amount, annual_percentage_rate, loan_duration_years, loan_duration_months. 
 
-# DEFAULT compound_frequency to monthly, 12
-  # Option to use YAML to store different compound rates, e.g.annually, semi-annually, quarterly 
-  # Option to allow for different compound rates? 
-  # e.g. SET compounding_interest_rate = annual_percentage_rate / compound_frequency  
 
-# SET loan_duration_months += loan_duration_years 
-# SET monthly_payment = '' 
+# Convert the annual_percentage_rate into a monthly_percentage_rate. 
 # SET monthly_interest_Rate = annual_percentage_rate / 12  
-
+# Get the total loan_duration_months 
+# SET loan_duration_months += loan_duration_years * 12  
+# Get the monthly_payment 
+# SET monthly_payment = '' 
 # SET monthly_payment_modifier = (monthly_interest_rate / 
   # (1 - (1 + monthly_interest_rate)**(-loan_duration_months))
 # SET monthly_payment = loan_amount * monthly_payment_modifier
-
 
 # PRINT the following:
   # Monthly payment: monthly_payment 
   # Monthly interest rate: monthly_interest_rate
   # Loan duration in months: loan_duration_months 
-
 
 ## Code (with intent) 
 
