@@ -31,6 +31,7 @@
   - Minimum APR: 0%
   - Minimum loan term: 1 month 
   - The inputs will come from the user, so make sure to accept user input. 
+  - Convert the loan duration into months and ask the user again if the loan duration is less than 1 month. 
   - Acceptable data types for input: integers or floats.
   - Precision: 2 decimal places, e.g. "$839.24".   
   - While the calculator is open, allow the user to calculating monthly payments (i.e. once done with one calculation ask the user if they want to calculate another)
@@ -42,7 +43,9 @@
 
 ## Examples
 
-### Example #1 
+### Positive Test Cases
+
+#### Example #1 
 - Inputs: 
   - loan amount: $100,000
   - Annual Percentage Rate (apr): 6% (0.06)
@@ -53,7 +56,7 @@
   - Monthly interest rate: 0.5% (0.05) 
   - Loan duration in months: 120
 
-### Example #2
+#### Example #2
 
 - Inputs: 
   - loan amount: $100,000
@@ -65,7 +68,7 @@
   - Monthly interest rate: 1%
   - Loan duration in months: 1 
   
-### Example #3
+#### Example #3
 
 - Inputs: 
   - loan amount: $100,000
@@ -77,17 +80,7 @@
   - Monthly interest rate: 1%
   - Loan duration in months: 13
 
-### Example #4: 
-
-- Inputs: 
-  - loan amount: $100,000
-  - Annual Percentage Rate (apr): 12% (0.12)
-  - loan duration: 0.123 years, 0 months
-
-- Outputs: 
-  - "Please provide a loan term greater than 1 month". 
-
-### Example #5: 
+#### Example #4: 
 
 - Inputs: 
   - loan amount: $100,000
@@ -98,6 +91,58 @@
   - Monthly payment: $8,877.91
   - Monthly interest rate: 1%
   - Loan duration in months: 12.01
+
+#### Example #5: 
+
+- Inputs: 
+  - loan amount: $100,000
+  - Annual Percentage Rate (apr): 12% (0.12)
+  - loan duration: 0.1 years, 0 months
+
+- Outputs: 
+  - Monthly payment: $8,877.91
+  - Monthly interest rate: 1%
+  - Loan duration in months: 12.01
+
+- Notes: 0.1 years is 1.2 months, which passes the minimum duration threshold. 
+
+## Negative Test Cases
+
+#### Example #5: 
+
+- Inputs: 
+  - loan amount: $100,000
+  - Annual Percentage Rate (apr): 12% (0.12)
+  - loan duration: 0.083 years, 0 months
+
+- Outputs: 
+  - "Please enter a loan duration greater than 1 month." 
+
+- Notes: 1 month is approximately 0.0833...3 years, so 0.083 years is less than 1 month. 
+
+#### Example #6: 
+
+- Inputs: 
+  - loan amount: $100,000
+  - Annual Percentage Rate (apr): 12% (0.12)
+  - loan duration: 0 years, 0.99 months
+
+- Outputs: 
+  - "Please enter a loan duration greater than 1 month." 
+ 
+
+#### Example #6: 
+
+- Inputs: 
+  - loan amount: -$1
+  - Annual Percentage Rate (apr): 12% (0.12)
+  - loan duration: 0.123 years, 0 months
+
+- Outputs: 
+  - "Please provide a loan amount greater than $0." 
+
+
+
 
 ## Data Structures
 
