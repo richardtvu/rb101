@@ -2,13 +2,20 @@
 # This program will help me separate and test out the user input and validation component from the rest of the program.
 
 require 'yaml'
-MESSAGES = YAML.load_file('messages.yml')
+MESSAGES = YAML.load_file('loan_calculator_messages.yml')
 
-MIN_LOAN_AMOUNT = 0.0
-MIN_ANNUAL_PERCENTAGE_RATE = 0.0
-MIN_DURATION_YEARS = 0.0
+# This program supports English, 'en', for now. 
+LANGUAGE = 'en' 
+
+MIN_AMOUNT = 0.0 
 MIN_TOTAL_DURATION_MONTHS = 1.0
 MONTHS_IN_YEAR = 12
+
+# Methods 
+
+def messages(message, lang=LANGUAGE)
+  MESSAGES[lang][message]
+end
 
 def prompt(message)
   puts "=> #{message}\n\n"
@@ -40,21 +47,16 @@ def sanitize_num(number)
   number.gsub(/(,|_)/, '')
 end
 
-def get_valid_number(request_msg, min_amount, error_msg)
+def get_valid_number(request_msg, error_msg)
   loop do
-    prompt request_msg # messages(request_num)
+    prompt messages(request_msg)
     num = sanitize_num(gets.chomp)
-    num = num.to_f if valid_number?(num)
-
-    if num >= min_amount
-      break num
+    if valid_number?(num)
+      num = num.to_f
+      break num if num >= MIN_AMOUNT
     end
-    prompt error_msg
+    prompt messages(error_msg)
   end
-end
-
-def get_months(years)
-  years * MONTHS_IN_YEAR
 end
 
 def get_monthly_rate(annual_percentage_rate)
@@ -66,20 +68,22 @@ end
 # GET user input for the loan_amount, annual_percentage_rate, loan_duration_years. Candidate for refactoring.
 # Validate each input:
 
-loan_amount = get_valid_number("Please enter the loan amount.", MIN_LOAN_AMOUNT, "Please provide a loan amount greater than or equal to $0.")
+loan_amount = get_valid_number("loan_msg", "loan_err_msg")
 
 # GET the annual_percentage_rate, in % (e.g. 5 is 5%)
-annual_percentage_rate = annual_percentage_rate = get_valid_number("Please enter the Annual Percentage Rate (APR) in %, e.g. 5 is 5%.", MIN_ANNUAL_PERCENTAGE_RATE, "Please provide an Annual Percentage Rate greater than or equal to 0.")
+annual_percentage_rate = get_valid_number("apr_msg", "apr_err_msg")
 
 # Convert annual_percentage_rate into decimal.
 monthly_interest_rate = get_monthly_rate(annual_percentage_rate)
 
-# GET loan_duration_years,
-loan_duration_years = get_valid_number("Please enter the duration of the loan in years, e.g. for a loan duration of 1 year 6 months, enter 1 for years and press enter. Then, press 6 when asked to enter months.", MIN_DURATION_YEARS, "The loan duration in years must be at least 0.")
+def get_total_duration_months
+  years = get_valid_number("loan_yr_msg", "yr_err_msg")
+  months = get_valid_number("loan_mo_msg", "mo_err_msg")
+  months + years * MONTHS_IN_YEAR
+end 
 
-# GET loan_duration_months
-months = get_valid_number("Please enter the duration of the loan in months. (e.g. if you had a loan duration of 1 year 6 months, enter 6 here.", MIN_TOTAL_DURATION_MONTHS, "The total loan duration must be at least 1 month.")
-total_duration_months = months + get_months(loan_duration_years)
+total_duration_months = get_total_duration_months
+
 
 # # At this point, we've a valid loan: consisting of loan_amount, annual_percentage_rate, loan_duration_years, loan_duration_months.
 
