@@ -129,9 +129,21 @@
 
 - Outputs: 
   - "Please enter a loan duration greater than 1 month." 
- 
 
-#### Example #7: Insufficient Loan Amount
+#### Example #7: Insufficient Loan Duration in Years
+
+- Inputs: 
+  - loan amount: $100,000
+  - Annual Percentage Rate (apr): 12% (0.12)
+  - loan duration: -1 years, 10 months
+
+- Outputs: 
+  - "The loan duration in years must be at least 0." 
+
+- Notes: 1 month is approximately 0.0833...3 years, so 0.083 years is less than 1 month. 
+ 
+7
+#### Example #8: Insufficient Loan Amount
 
 - Inputs: 
   - loan amount: -$1
@@ -141,7 +153,7 @@
 - Outputs: 
   - "Please provide a loan amount greater than or equal to $0." 
 
-#### Example #8: APR Too Low 
+#### Example #9: APR Too Low 
 
 - Inputs: 
   - loan amount: $100
@@ -151,7 +163,7 @@
 - Outputs: 
   - "Please provide an Annual Percentage Rate greater than or equal to 0." 
 
-#### Example #9: Non-numeric Input 
+#### Example #10: Non-numeric Input 
 
 - Inputs: 
   - loan amount: one hundred
@@ -187,32 +199,42 @@
   # Option to allow for different compound rates? 
   # e.g. SET compounding_interest_rate = annual_percentage_rate / compound_frequency  
 
-  --------
+# ----------------- MAIN 
 
 # SET MIN_LOAN_AMOUNT = 0 
 # SET MIN_ANNUAL_PERCENTAGE_RATE = 0 
 # SET MIN_LOAN_DURATION_MONTHS = 1
 
-# GET user input for the loan_amount, annual_percentage_rate, loan_duration_years.
+# GET user input for the loan_amount, annual_percentage_rate, loan_duration_years. Candidate for refactoring. 
 # Validate each input:
   # GET the loan_amount,
     # IF the loan_amount is NOT a valid number (integer or float) 
       # OUTPUT "This calculator only accepts numbers, e.g. "100", "12.23". 
-      # GET the loan_amount
-    # ELSE IF loan_amount <= MIN_LOAN_AMOUNT
+    # ELSE IF loan_amount < MIN_LOAN_AMOUNT
       # OUTPUT "Please provide a loan amount greater than or equal to $0."
-    
+    # ELSE 
+      # BREAK 
   
-  # annual_percentage_rate, in % (e.g. 5 is 5%)
-    # check is a valid number (integer or float)
-    # validate annual_percentage_rate >= MIN_ANNUAL_PERCENTAGE_RATE  
-    # convert 
-  # loan_duration_years, 
-    # check is a valid number (integer or float)
-    # validate loan_duration_years >= 0 
-  # loan_duration_months 
-    # check is a valid number (integer or float)
-    # validate loan_duration_months >= 1
+  # GET the annual_percentage_rate, in % (e.g. 5 is 5%) 
+    # IF the annual_percentage_rate is NOT a valid number (integer or float) 
+      # OUTPUT "This calculator only accepts numbers, e.g. "100", "12.23". 
+    # ELSE IF annual_percentage_rate < MIN_ANNUAL_PERCENTAGE_RATE  
+      # OUTPUT "Please provide an Annual Percentage Rate greater than or equal to 0." 
+    # ELSE: 
+      # Convert annual_percentage_rate into decimal.  
+  
+  # GET loan_duration_years, 
+    # IF the loan_duration_years is NOT a valid number (integer or float) 
+      # OUTPUT "This calculator only accepts numbers, e.g. "100", "12.23". 
+    # ELSE IF loan_duration_years < 0 
+      # OUTPUT "The loan duration in years must be at least 0." 
+  # GET loan_duration_months 
+    # IF the loan_duration_months is NOT a valid number (integer or float) 
+      # OUTPUT "This calculator only accepts numbers, e.g. "100", "12.23". 
+    # ELSE IF loan_duration_months < MIN_LOAN_DURATION_MONTHS AND loan_duration_years < (1.0/12.0)
+      # OUTPUT "The total loan duration must be at least 1 month." 
+    # ELSE 
+      # Break? 
 
 # At this point, we've a valid loan: consisting of loan_amount, annual_percentage_rate, loan_duration_years, loan_duration_months. 
 
@@ -233,6 +255,7 @@
   # Loan duration in months: loan_duration_months 
 
 ## Code (with intent) 
+```
 
 ```rb
 def  
