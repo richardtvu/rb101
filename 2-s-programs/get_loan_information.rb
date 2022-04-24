@@ -6,8 +6,9 @@ MESSAGES = YAML.load_file('messages.yml')
 
 MIN_LOAN_AMOUNT = 0.0
 MIN_ANNUAL_PERCENTAGE_RATE = 0.0
-MIN_LOAN_DURATION_MONTHS = 1.0
-YEARS_TO_MONTHS_MODIFIER = 12
+MIN_DURATION_YEARS = 0.0
+MIN_TOTAL_DURATION_MONTHS = 1.0
+MONTHS_IN_YEAR = 12
 
 def prompt(message)
   puts "=> #{message}\n\n"
@@ -33,24 +34,31 @@ def float?(input)
     !/^[-|+]?\.$/.match(input)
 end
 
-def get_valid_number(request_message)
-  num = ""
-  loop do
-    prompt request_message # messages(request_num)
-    num = gets.chomp
-    break if valid_number?(num)
+# Enhance flexibility of user inputs. Accepts string and
+# returns string without commas and underscores
+def sanitize_num(number)
+  number.gsub(/(,|_)/, '')
+end
 
-    prompt messages("not_valid_number")
+def get_valid_number(request_msg, min_amount, error_msg)
+  loop do
+    prompt request_msg # messages(request_num)
+    num = sanitize_num(gets.chomp)
+    num = num.to_f if valid_number?(num)
+
+    if num >= min_amount
+      break num
+    end
+    prompt error_msg
   end
-  num.to_f
 end
 
 def get_months(years)
-  years * YEARS_TO_MONTHS_MODIFIER
+  years * MONTHS_IN_YEAR
 end
 
-def get_decimal_rate(percentage)
-  percentage / 100.0
+def get_monthly_rate(annual_percentage_rate)
+  annual_percentage_rate / MONTHS_IN_YEAR / 100.0
 end
 
 # MAIN
@@ -58,59 +66,39 @@ end
 # GET user input for the loan_amount, annual_percentage_rate, loan_duration_years. Candidate for refactoring.
 # Validate each input:
 
-loan_amount = ""
-loop do
-  # GET the loan_amount,
-  loan_amount = get_valid_number("Please enter the loan amount.")
-  break if loan_amount >= MIN_LOAN_AMOUNT
-  prompt "Please provide a loan amount greater than or equal to $0."
-end
+loan_amount = get_valid_number("Please enter the loan amount.", MIN_LOAN_AMOUNT, "Please provide a loan amount greater than or equal to $0.")
 
-annual_percentage_rate=""
-loop do
-  # GET the annual_percentage_rate, in % (e.g. 5 is 5%)
-  annual_percentage_rate = get_valid_number("Please enter the Annual Percentage Rate (APR) in %, e.g. 5 is 5%.")
-  break if annual_percentage_rate >= MIN_ANNUAL_PERCENTAGE_RATE
-  prompt "Please provide an Annual Percentage Rate greater than or equal to 0."
-end
+# GET the annual_percentage_rate, in % (e.g. 5 is 5%)
+annual_percentage_rate = annual_percentage_rate = get_valid_number("Please enter the Annual Percentage Rate (APR) in %, e.g. 5 is 5%.", MIN_ANNUAL_PERCENTAGE_RATE, "Please provide an Annual Percentage Rate greater than or equal to 0.")
 
 # Convert annual_percentage_rate into decimal.
-annual_percentage_rate = get_decimal_rate(annual_percentage_rate)
+monthly_interest_rate = get_monthly_rate(annual_percentage_rate)
 
-loan_duration_years = ""
-loop do
-  # GET loan_duration_years,
-  loan_duration_years = get_valid_number("Please enter the duration of the loan in years, e.g. for a loan duration of 1 year 6 months, enter 1 for years and press enter. Then, press 6 when asked to enter months.")
-  break if loan_duration_years >= 0
-  prompt "The loan duration in years must be at least 0."
-end
+# GET loan_duration_years,
+loan_duration_years = get_valid_number("Please enter the duration of the loan in years, e.g. for a loan duration of 1 year 6 months, enter 1 for years and press enter. Then, press 6 when asked to enter months.", MIN_DURATION_YEARS, "The loan duration in years must be at least 0.")
 
-total_loan_duration_months = "" 
-loop do
-  # GET loan_duration_months
-  months = get_valid_number("Please enter the duration of the loan in months. (e.g. if you had a loan duration of 1 year 6 months, enter 6 here.")
-  total_loan_duration_months = months + get_months(loan_duration_years)
-  break if total_loan_duration_months >= MIN_LOAN_DURATION_MONTHS
-  prompt "The total loan duration must be at least 1 month."
-end
-
+# GET loan_duration_months
+months = get_valid_number("Please enter the duration of the loan in months. (e.g. if you had a loan duration of 1 year 6 months, enter 6 here.", MIN_TOTAL_DURATION_MONTHS, "The total loan duration must be at least 1 month.")
+total_duration_months = months + get_months(loan_duration_years)
 
 # # At this point, we've a valid loan: consisting of loan_amount, annual_percentage_rate, loan_duration_years, loan_duration_months.
 
-
-monthly_interest_rate = annual_percentage_rate/12.0
 loan = {}
 loan[:loan_amount] = loan_amount
 loan[:monthly_interest_rate] = monthly_interest_rate
-loan[:total_loan_duration_months] = total_loan_duration_months
-
+loan[:total_duration_months] = total_duration_months
 
 # Output hash
-loan.each do | key, value |
+loan.each do |key, value|
   puts "#{key} => #{value}"
 end
 
-monthly_payment_modifier = monthly_interest_rate / (1 - (1 + monthly_interest_rate)**(-total_loan_duration_months))
+interest_rate_mod = 1 - (1 + monthly_interest_rate)**(-total_duration_months)
+monthly_payment_modifier = monthly_interest_rate / interest_rate_mod
 monthly_payment = loan_amount * monthly_payment_modifier
 
 puts monthly_payment
+
+# NEXT STEP... is to Refactor the get loops for getting the loan amount, monthly interest rate, and total loan duration. ....
+# DONE is better than perfect.
+# Remove the hash.

@@ -2,9 +2,9 @@
 Suppose we're building a scientific calculator,
 and we now need to account for inputs that include decimals.
 How can we build a validating method, called number?,
-to verify that only valid numbers -- integers or floats -- are entered? 
+to verify that only valid numbers -- integers or floats -- are entered?
 
-The contained method will validate integers/floats. 
+The contained method will validate integers/floats.
 
 Problem:
   Input: String
@@ -42,24 +42,22 @@ Algorithm:
 - ELSE
   - Return false.
 
-
 =end
 class Validator
   def self.number?(input)
     # In case the input isn't already a string.
     input = input.to_s
-    obj = Validator.integer?(input) || Validator.float?(input) 
+    obj = Validator.integer?(input) || Validator.float?(input)
     obj ? true : false
   end
-  def self.integer?(input) 
+
+  def self.integer?(input)
     obj = /^[-+]?\d+$/.match(input)
-  end 
+  end
 
   def self.float?(input)
-    obj = /^[-|+]?\d*\.\d*$/.match(input) 
-  end 
-
-
+    obj = /^[-|+]?\d*\.\d*$/.match(input)
+  end
 end
 
 # Test Cases
