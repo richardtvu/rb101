@@ -41,39 +41,60 @@ def float?(input)
 end
 
 # Enhance flexibility of user inputs. Accepts string and
-# returns string without commas,underscores, %, or $. 
+# returns string without commas,underscores, %, or $.
 def sanitize_num(number)
   number.gsub(/[,_$%]/, '')
 end
 
-def get_valid_number(request_msg, error_msg)
+# def get_valid_number(request_msg, error_msg)
+#   loop do
+#     prompt messages(request_msg)
+#     num = sanitize_num(gets.chomp)
+#     if valid_number?(num)
+#       num = num.to_f
+#       break num if num >= MIN_AMOUNT
+#     end
+#     prompt messages(error_msg)
+#   end
+# end
+
+def get_valid_number(amt_type, explanation = "")
   loop do
-    prompt messages(request_msg)
+    prompt "#{messages("request")} #{messages(amt_type)}#{messages(explanation)}." 
     num = sanitize_num(gets.chomp)
-    if valid_number?(num)
+    if valid_number?(num) 
       num = num.to_f
       break num if num >= MIN_AMOUNT
     end
-    prompt messages(error_msg)
+
+    if amt_type == "loan_dur_mo"
+      min_amt = "1 " + messages("mo")
+    else 
+      min_amt = MIN_AMOUNT
+    end 
+
+    prompt "#{messages("please_enter")}#{messages(amt_type)} #{messages("greater_than")} #{min_amt}."
   end
 end
 
 def get_monthly_rate_decimal
-  annual_percentage_rate = get_valid_number("apr_msg", "apr_err_msg")
+  annual_percentage_rate = get_valid_number("apr", "apr_explanation")
   annual_percentage_rate / MONTHS_IN_YEAR / 100.0
 end
 
-def to_percent(decimalNum)
-  decimalNum * 100 
-end 
+def to_percent(decimal_num)
+  decimal_num * 100
+end
+
+
 
 def get_total_dur_mos
-  years = get_valid_number("loan_yr_msg", "yr_err_msg")
-  months = get_valid_number("loan_mo_msg", "mo_err_msg")
+  years = get_valid_number("loan_dur_yr", "dur_yr_explanation")
+  months = get_valid_number("loan_dur_mo", "dur_mo_explanation")
   months + years * MONTHS_IN_YEAR
 end
 
-# Monthly loan payment. 
+# Monthly loan payment.
 def get_mo_payment(loan_amt, mo_int_rate, total_dur_mos)
   int_rate_mod = 1 - (1 + mo_int_rate)**(-total_dur_mos)
   mo_pay_mod = mo_int_rate / int_rate_mod
@@ -81,13 +102,14 @@ def get_mo_payment(loan_amt, mo_int_rate, total_dur_mos)
 end
 
 def format_num(num, precision=2)
-  sprintf("%.#{precision}f", num.round(precision))
-end 
+
+  format("%.#{precision}f", num.round(precision))
+end
 
 # MAIN
 
 prompt messages("welcome")
-prompt messages("name") 
+prompt messages("name")
 
 name = ""
 loop do
@@ -101,31 +123,37 @@ end
 
 prompt "#{messages('greet')} #{name}!"
 
-loop do # main loop 
-loan_amt = get_valid_number("loan_msg", "loan_err_msg")
-monthly_interest_rate_decimal = get_monthly_rate_decimal
-total_dur_mos = get_total_dur_mos
+loop do # main loop
+  loan_amt = get_valid_number("loan_amount")
+  monthly_interest_rate_decimal = get_monthly_rate_decimal
+  total_dur_mos = get_total_dur_mos
 
-monthly_payment = get_mo_payment(loan_amt, monthly_interest_rate_decimal, total_dur_mos)
+  monthly_payment = get_mo_payment(
+    loan_amt,
+    monthly_interest_rate_decimal,
+    total_dur_mos
+  )
 
-# DISPLAY results.  
 
-monthly_interest_rate = to_percent(monthly_interest_rate_decimal)
+  # Format results 
+  monthly_interest_rate = to_percent(monthly_interest_rate_decimal)
 
+  monthly_payment = messages("currency") + format_num(monthly_payment)
+  monthly_interest_rate = format_num(monthly_interest_rate)
+  total_dur_mos = format_num(total_dur_mos)
 
-monthly_payment = format_num(monthly_payment)
-monthly_interest_rate = format_num(monthly_interest_rate)
-total_dur_mos = format_num(total_dur_mos)
+  # DISPLAY results.
 
-prompt("Results")
-prompt("-------")
-prompt("Monthly Payment:          #{monthly_payment}")
-prompt("Monthly Interest Rate:    #{monthly_interest_rate}")
-prompt("Loan Duration in Months:  #{total_dur_mos}")
+  puts "" 
+  prompt("Results")
+  prompt("-------")
+  prompt("Monthly Payment:          #{monthly_payment}")
+  prompt("Monthly Interest Rate:    #{monthly_interest_rate}%")
+  prompt("Loan Duration in Months:  #{total_dur_mos}")
 
-prompt messages('calculate_again') 
-answer = gets.chomp 
-break unless answer.downcase.start_with?('y')
-end 
+  prompt messages('calculate_again')
+  answer = gets.chomp
+  break unless answer.downcase.start_with?('y')
+end
 
 prompt messages("good_bye")
