@@ -53,7 +53,7 @@
 
 - Outputs:
   - Monthly payment: $1,110.21 
-  - Monthly interest rate: 0.5% (0.05) 
+  - Monthly interest rate: 0.5% (0.005) 
   - Loan duration in months: 120
 
 #### Example #2
@@ -257,5 +257,13 @@
 ## Code (with intent) 
 ```
 
-```rb
-def  
+## Want To Dos
+- CLean up output 
+  - [x] Display the Monthly Payment, followed by interest rate, and then months. 
+- Improve user experience 
+  - [x] Truncate/round the outputs to 2 decimal places. 
+  - [x] Align the outputs, so that the beginning of the values are lined up. 
+
+- [ ] Tighten up the code.
+  - [ ] Extract messages to YAML configuration file. 
+

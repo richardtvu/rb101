@@ -41,9 +41,9 @@ def float?(input)
 end
 
 # Enhance flexibility of user inputs. Accepts string and
-# returns string without commas and underscores
+# returns string without commas,underscores, %, or $. 
 def sanitize_num(number)
-  number.gsub(/(,|_)/, '')
+  number.gsub(/[,_$%]/, '')
 end
 
 def get_valid_number(request_msg, error_msg)
@@ -58,10 +58,14 @@ def get_valid_number(request_msg, error_msg)
   end
 end
 
-def get_monthly_rate
+def get_monthly_rate_decimal
   annual_percentage_rate = get_valid_number("apr_msg", "apr_err_msg")
   annual_percentage_rate / MONTHS_IN_YEAR / 100.0
 end
+
+def to_percent(decimalNum)
+  decimalNum * 100 
+end 
 
 def get_total_dur_mos
   years = get_valid_number("loan_yr_msg", "yr_err_msg")
@@ -79,27 +83,25 @@ end
 # MAIN
 
 loan_amt = get_valid_number("loan_msg", "loan_err_msg")
-monthly_interest_rate = get_monthly_rate
+monthly_interest_rate_decimal = get_monthly_rate_decimal
 total_dur_mos = get_total_dur_mos
 
-monthly_payment = get_mo_payment(loan_amt, monthly_interest_rate, total_dur_mos)
-
+monthly_payment = get_mo_payment(loan_amt, monthly_interest_rate_decimal, total_dur_mos)
 
 # DISPLAY results.  
 
-loan = {}
-loan[:loan_amt] = loan_amt
-loan[:mo_int_rate] = monthly_interest_rate
-loan[:total_dur_mos] = total_dur_mos
+monthly_interest_rate = to_percent(monthly_interest_rate_decimal)
 
-# Output hash
-loan.each do |key, value|
-  puts "#{key} => #{value}"
-end
+def format_num(num, precision=2)
+  sprintf("%.#{precision}f", num.round(precision))
+end 
 
+monthly_payment = format_num(monthly_interest_rate)
+monthly_interest_rate = format_num(monthly_interest_rate)
+total_dur_mos = format_num(total_dur_mos)
 
-puts monthly_payment
-
-# NEXT STEPS: 
-# Clean up OUTPUT 
-# 
+prompt("Results")
+prompt("-------")
+prompt("Monthly Payment:          #{monthly_payment}")
+prompt("Monthly Interest Rate:    #{monthly_interest_rate}")
+prompt("Loan Duration in Months:  #{total_dur_mos}")
