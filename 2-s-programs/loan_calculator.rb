@@ -75,6 +75,7 @@ def get_mo_payment(loan_amt, mo_int_rate, total_dur_mos)
   mo_pay_mod = mo_int_rate / int_rate_mod
   loan_amt * mo_pay_mod
 end
+
 # MAIN
 
 loan_amt = get_valid_number("loan_msg", "loan_err_msg")
@@ -83,11 +84,8 @@ total_dur_mos = get_total_dur_mos
 
 monthly_payment = get_mo_payment(loan_amt, monthly_interest_rate, total_dur_mos)
 
-# At this point, we've a valid loan: consisting of
-# loan_amt, 
-# annual_percentage_rate, 
-# loan_duration_years, 
-# loan_duration_months.
+
+# DISPLAY results.  
 
 loan = {}
 loan[:loan_amt] = loan_amt
@@ -99,10 +97,9 @@ loan.each do |key, value|
   puts "#{key} => #{value}"
 end
 
-# int_rate_mod =
-#   1 -
-#   (1 + monthly_interest_rate)**(-total_dur_mos)
-# mo_pay_mod = monthly_interest_rate / int_rate_mod
-# monthly_payment = loan_amt * mo_pay_mod
 
 puts monthly_payment
+
+# NEXT STEPS: 
+# Clean up OUTPUT 
+# 
