@@ -263,7 +263,10 @@
 - Improve user experience 
   - [x] Truncate/round the outputs to 2 decimal places. 
   - [x] Align the outputs, so that the beginning of the values are lined up. 
-
+  - [x] Implement welcome message 
+  - [x] Get users name 
+  - [x] Implement main loop for getting user input continuously 
+  - [x] Implement good bye message. 
 - [ ] Tighten up the code.
   - [ ] Extract messages to YAML configuration file. 
 

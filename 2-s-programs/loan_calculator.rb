@@ -80,8 +80,28 @@ def get_mo_payment(loan_amt, mo_int_rate, total_dur_mos)
   loan_amt * mo_pay_mod
 end
 
+def format_num(num, precision=2)
+  sprintf("%.#{precision}f", num.round(precision))
+end 
+
 # MAIN
 
+prompt messages("welcome")
+prompt messages("name") 
+
+name = ""
+loop do
+  name = gets.chomp
+  if name.empty?
+    prompt messages("valid_name")
+  else
+    break
+  end
+end
+
+prompt "#{messages('greet')} #{name}!"
+
+loop do # main loop 
 loan_amt = get_valid_number("loan_msg", "loan_err_msg")
 monthly_interest_rate_decimal = get_monthly_rate_decimal
 total_dur_mos = get_total_dur_mos
@@ -92,11 +112,8 @@ monthly_payment = get_mo_payment(loan_amt, monthly_interest_rate_decimal, total_
 
 monthly_interest_rate = to_percent(monthly_interest_rate_decimal)
 
-def format_num(num, precision=2)
-  sprintf("%.#{precision}f", num.round(precision))
-end 
 
-monthly_payment = format_num(monthly_interest_rate)
+monthly_payment = format_num(monthly_payment)
 monthly_interest_rate = format_num(monthly_interest_rate)
 total_dur_mos = format_num(total_dur_mos)
 
@@ -105,3 +122,10 @@ prompt("-------")
 prompt("Monthly Payment:          #{monthly_payment}")
 prompt("Monthly Interest Rate:    #{monthly_interest_rate}")
 prompt("Loan Duration in Months:  #{total_dur_mos}")
+
+prompt messages('calculate_again') 
+answer = gets.chomp 
+break unless answer.downcase.start_with?('y')
+end 
+
+prompt messages("good_bye")

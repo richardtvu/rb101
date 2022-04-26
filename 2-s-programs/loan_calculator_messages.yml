@@ -8,9 +8,13 @@ en:
   yr_err_msg: "The loan duration in years must be at least 0."
   total_dur_err_msg: "The total loan duration must be at least 1 month."
   welcome: |
-    Welcome to Calculator!
-    -------------------------
-    You can add, subtract, multiply, or divide two numbers.  
+    Welcome to the Loan Calculator!
+    -----------------------------------
+    You can input your loan amount, the Annual Percentage 
+    Rate, and the duration of your loan in years and months.
+
+    You'll get back your monthly payment, monthly interest
+    rate, and how long your loan lasts in months.  
   name: "What's your name?" 
   greet: "Hi"
   valid_name: "Make sure to use a zvalid name." 
