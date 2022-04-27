@@ -46,35 +46,31 @@ def sanitize_num(number)
   number.gsub(/[,_$%]/, '')
 end
 
-# def get_valid_number(request_msg, error_msg)
-#   loop do
-#     prompt messages(request_msg)
-#     num = sanitize_num(gets.chomp)
-#     if valid_number?(num)
-#       num = num.to_f
-#       break num if num >= MIN_AMOUNT
-#     end
-#     prompt messages(error_msg)
-#   end
-# end
-
 def get_valid_number(amt_type, explanation = "")
   loop do
-    prompt "#{messages("request")} #{messages(amt_type)}#{messages(explanation)}." 
+    request = "#{messages('request')} #{messages(amt_type)}"
+
+    prompt "#{request}#{messages(explanation)}"
     num = sanitize_num(gets.chomp)
-    if valid_number?(num) 
+    if valid_number?(num)
       num = num.to_f
       break num if num >= MIN_AMOUNT
     end
 
-    if amt_type == "loan_dur_mo"
-      min_amt = "1 " + messages("mo")
-    else 
-      min_amt = MIN_AMOUNT
-    end 
-
-    prompt "#{messages("please_enter")}#{messages(amt_type)} #{messages("greater_than")} #{min_amt}."
+    display_error_message(amt_type)
   end
+end
+
+def display_error_message(amt_type)
+  # Error Messages
+  if amt_type == "loan_dur_mo"
+    min_amt = "1 " + messages("mo")
+  else
+    min_amt = MIN_AMOUNT
+  end
+  prompt messages('please_enter') +
+         "#{messages(amt_type)}" +
+         "#{messages('greater_than')} #{min_amt}."
 end
 
 def get_monthly_rate_decimal
@@ -85,8 +81,6 @@ end
 def to_percent(decimal_num)
   decimal_num * 100
 end
-
-
 
 def get_total_dur_mos
   years = get_valid_number("loan_dur_yr", "dur_yr_explanation")
@@ -102,7 +96,6 @@ def get_mo_payment(loan_amt, mo_int_rate, total_dur_mos)
 end
 
 def format_num(num, precision=2)
-
   format("%.#{precision}f", num.round(precision))
 end
 
@@ -134,8 +127,7 @@ loop do # main loop
     total_dur_mos
   )
 
-
-  # Format results 
+  # Format results
   monthly_interest_rate = to_percent(monthly_interest_rate_decimal)
 
   monthly_payment = messages("currency") + format_num(monthly_payment)
@@ -144,7 +136,7 @@ loop do # main loop
 
   # DISPLAY results.
 
-  puts "" 
+  puts ""
   prompt("Results")
   prompt("-------")
   prompt("Monthly Payment:          #{monthly_payment}")

@@ -267,6 +267,6 @@
   - [x] Get users name 
   - [x] Implement main loop for getting user input continuously 
   - [x] Implement good bye message. 
-   Tighten up the code.
+-  Tighten up the code.
   - [x] Extract messages to YAML configuration file. 
 
