@@ -20,6 +20,17 @@ def prompt(message)
   puts "=> #{message}\n\n"
 end
 
+def get_name
+  loop do
+    name = gets.chomp
+    if name.empty?
+      prompt messages("valid_name")
+    else
+      break name
+    end
+  end
+end
+
 # See notes-and-misc/number_validator.rb for PEDAC approach and test cases.
 def valid_number?(input)
   input = input.to_s
@@ -69,7 +80,7 @@ def display_error_message(amt_type)
     min_amt = MIN_AMOUNT
   end
   prompt messages('please_enter') +
-         "#{messages(amt_type)}" +
+         "#{messages(amt_type)}" \
          "#{messages('greater_than')} #{min_amt}."
 end
 
@@ -104,16 +115,7 @@ end
 prompt messages("welcome")
 prompt messages("name")
 
-name = ""
-loop do
-  name = gets.chomp
-  if name.empty?
-    prompt messages("valid_name")
-  else
-    break
-  end
-end
-
+name = get_name
 prompt "#{messages('greet')} #{name}!"
 
 loop do # main loop
