@@ -1,0 +1,30 @@
+en:
+  request: "Please enter the" 
+  loan_amount: "loan amount"
+  apr: "Annual Percentage Rate"
+  apr_explanation: " in %, e.g. 5%"
+  loan_dur_yr: "loan duration in years" 
+  dur_yr_explanation: ", e.g. for a loan duration of 1 year, 6 months, enter 1"
+  loan_dur_mo: "loan duration in months"
+  dur_mo_explanation: ", e.g. for a duration of 1 year, 6 months, enter 6"
+  please_enter: "Please enter "
+  greater_than: " greater than or equal to"
+  mo: "month"
+  currency: "$"
+
+  welcome: |
+    Welcome to the Loan Calculator!
+    -----------------------------------
+    You can input your loan amount, the Annual Percentage 
+    Rate, and the duration of your loan in years and months.
+
+    You'll get back your monthly payment, monthly interest
+    rate, and how long your loan lasts in months.  
+  name: "What's your name?" 
+  greet: "Hi"
+  valid_name: "Make sure to use a valid name." 
+  not_valid_number: "Hmm... that doesn't look like a valid number."
+
+
+  calculate_again: "Do you want to perform another calculation? (Y to calculate again)"
+  good_bye: "Thank you for using the calculator. Good bye!"
