@@ -1,7 +1,7 @@
 # Mortgage Loan Calculator
 
 require 'yaml'
-MESSAGES = YAML.load_file('loan_calculator_messages.yml')
+MESSAGES = YAML.load_file('messages_loan_calculator.yml')
 
 # This program supports English, 'en', for now.
 LANGUAGE = 'en'
