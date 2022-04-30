@@ -1,0 +1,19 @@
+en: 
+  welcome: |
+    Welcome to Tic-Tac-Toe!
+    ===========================================================
+    Tic-Tac-Toe is a two-player game played in a 3x3 square. 
+    You'll alternate putting down an 'x' or an 'o' with a
+    computer until one wins or a tie occurs. 
+
+    Game Conditions:
+    - Win: You get three in a row (diagonally, horizontally,
+    vertically) before the computer.
+    - Tie: The board gets filled before either you or the
+    computer wins. 
+    - Lose: The computer gets three in a row before you. 
+    ------------------------------------------------------------
+  greet: "Hi"
+  valid_name: "Make sure to use a valid name." 
+  play_again: "Do you want to play again? (Enter 'y' to play again)"
+  good_bye: "Thank you for playing Rock Paper Scissors. Good bye!"
