@@ -134,7 +134,7 @@ welcome_msg =
   - Tie: The board gets filled before either you or the
   computer wins. 
   - Lose: The computer gets three in a row before you. 
-  ------------------------------------------------------------)
+  ------------------------------------------------------------
   MSG
 
 
@@ -286,9 +286,15 @@ end
 
 # DISPLAY the winner. 
 prompt "The winner is #{winner}!" 
-
-
-
-
-
 ```
+
+# Want-to-dos
+
+- [ ] Add personalization by getting user's name
+   -  [ ] Display the user's name when asking user to make move. 
+   -  [ ] Display user's name at end of main loop when displaying results. 
+   -  [ ] Display user's name when saying good-bye.
+   -  [ ] Display user's name when saying hello. 
+- [ ] Before submitting for code review, ensure there are no rubocop errors. 
+  - Uncheck this box any time new changes are checked in. 
+- [ ] 
