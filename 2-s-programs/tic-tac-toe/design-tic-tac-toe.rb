@@ -100,6 +100,12 @@
 
 - Hash to store the user's character selection, e.g. '{user_char: 'x', computer_char: 'o"} 
 - A hash to store the number of matches won by the user/computer (for future development) 
+- How do I store the user's name and marker efficiently? 
+- How will I get and set the user's name and marker? 
+- How do I represent the computer? 
+
+
+
 
 # Algorithm 
 
@@ -290,11 +296,18 @@ prompt "The winner is #{winner}!"
 
 # Want-to-dos
 
-- [ ] Add personalization by getting user's name
+- [ ] Add personalization by  getting user's name
    -  [ ] Display the user's name when asking user to make move. 
    -  [ ] Display user's name at end of main loop when displaying results. 
    -  [ ] Display user's name when saying good-bye.
    -  [ ] Display user's name when saying hello. 
 - [ ] Before submitting for code review, ensure there are no rubocop errors. 
   - Uncheck this box any time new changes are checked in. 
-- [ ] 
+
+
+- What's the minimum viable product? 
+  - User is "X" and goes first. 
+  - Have a game board. 
+  - Computer goes next. 
+  - Alternates until tie or win. 
+  - Displays winner. 

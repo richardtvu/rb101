@@ -14,6 +14,7 @@ en:
     - Lose: The computer gets three in a row before you. 
     ------------------------------------------------------------
   greet: "Hi"
+  request_name: "What's your name?"
   valid_name: "Make sure to use a valid name." 
   play_again: "Do you want to play again? (Enter 'y' to play again)"
   good_bye: "Thank you for playing Rock Paper Scissors. Good bye!"
