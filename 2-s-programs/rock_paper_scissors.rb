@@ -80,6 +80,11 @@ def reset_scores!(scores)
   scores.transform_values! { |_value| 0 }
 end
 
+def clear_screen
+  system("clear")
+  system("cls")
+end
+
 #========================== MAIN ===========================
 
 welcome_msg = <<~MSG
@@ -113,6 +118,7 @@ loop do
   if grand_winner?(scores)
     display_grand_winner(scores)
     play_again? ? reset_scores!(scores) : break
+    clear_screen
   end
 end
 
