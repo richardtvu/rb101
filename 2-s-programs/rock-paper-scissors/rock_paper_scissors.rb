@@ -1,32 +1,36 @@
 VALID_CHOICES = %w(rock paper scissors lizard spock)
 
+WINNING_PLAYS = {
+  scissors: ["paper", "lizard"],
+  paper: ["rock", "spock"],
+  rock: ["lizard", "scissors"],
+  lizard: ["spock", "paper"],
+  spock: ["scissors", "rock"]
+}
+
+#======================== Methods ==========================
+
 def prompt(msg)
   puts "=> #{msg}\n\n"
 end
 
-def get_closest_choice(choice) 
+def get_closest_choice(choice)
   compatible_choices = VALID_CHOICES.select do |word|
-    word.start_with?(choice) 
-  end 
-  compatible_choices.first  
-end 
-
+    word.start_with?(choice)
+  end
+  compatible_choices.first
+end
 
 def get_choice
   loop do
     prompt "Choose one: #{VALID_CHOICES.join(', ')}"
-    prompt "You can enter the first letter or two to select a choice: , e.g. 'r' for 'rock' and 'sp' for 'spock'." 
+    prompt "You can enter the first letter or two to select a choice:" \
+      ", e.g. 'r' for 'rock' and 'sp' for 'spock'."
     choice = gets.chomp
-    valid_choice = get_closest_choice(choice) 
+    valid_choice = get_closest_choice(choice)
     break valid_choice if valid_choice
     prompt("That's not a valid choice.")
   end
-end
-
-def get_outcome(choice, computer_choice)
-  return "You tied!" if choice == computer_choice
-  return "You won!" if PLAYER_WINS.include?([choice, computer_choice])
-  "You lost :(."
 end
 
 def play_again?
@@ -37,50 +41,63 @@ def play_again?
 end
 
 def win?(first, second)
-  (first == 'scissors' && second == 'paper') ||
-  (first == 'scissors' && second == 'lizard') ||
-  (first == 'paper' && second == 'rock') ||
-  (first == 'paper' && second == 'spock') ||
-  (first == 'rock' && second == 'lizard') ||
-  (first == 'rock' && second == 'scissors') ||
-  (first == 'lizard' && second == 'spock') ||
-  (first == 'lizard' && second == 'paper') ||
-  (first == 'spock' && second == 'scissors') ||
-  (first == 'spock' && second == 'rock') 
+  WINNING_PLAYS[first.to_sym].include?(second)
 end
 
-
 def get_results(player_choice, computer_choice)
-  if win?(player_choice, computer_choice)
-     1
-  elsif win?(computer_choice, player_choice)
-    -1
-  else
-     0 
-  end
+  if win?(player_choice, computer_choice) then :user
+  elsif win?(computer_choice, player_choice) then :computer
+  else :tie end
 end
 
 def display_results(result)
-  prompt "Player won!" if result == 1
-  prompt "It's a tie!" if result == 0 
-  prompt "Computer won!" if result == -1
+  prompt "Player won!" if result == :user
+  prompt "It's a tie!" if result == :tie
+  prompt "Computer won!" if result == :computer
 end
 
-def grand_winner?(user_wins, computer_wins) 
-  return true if user_wins >= 3 || computer_wins >= 3
-  false 
-end 
+def increment_scores!(outcome, scores)
+  scores[outcome] += 1
+end
 
-def display_grand_winner(num_wins_user, num_wins_computer) 
-  if num_wins_user >= 3
-    prompt "User is the grand winner!" 
-  else 
-    prompt "Computer is the grand winner!" 
-  end 
-end 
 
-wins_user = 0 
-wins_computer = 0 
+def grand_winner?(scores)
+  return true if scores[:user] >= 3 || scores[:computer] >= 3
+  false
+end
+
+def prompt_grand_winner(msg)
+  prompt "=" * msg.size
+  prompt msg
+  prompt "=" * msg.size
+end
+
+def display_grand_winner(scores)
+  if scores[:user] >= 3 then prompt_grand_winner "User is the grand winner!"
+  else prompt_grand_winner "Computer is the grand winner!" end
+end
+
+  def reset_scores!(scores)
+    scores.transform_values! { |_value| 0 }
+  end
+
+#========================== MAIN ===========================
+
+welcome_msg = <<~MSG
+Welcome to Rock Paper Scissors Spock Lizard! 
+============================================
+This game is like Rock Paper Scissors, except you get
+to have two more choices. 
+
+- Rock crushes Lizard and Scissors. 
+- Paper beats Spock and Rock. 
+- Scissors chops up Lizard and Paper. 
+- Spock vaporizes Rock and Scissors. 
+- Lizard eats Spock and Paper.  
+MSG
+prompt welcome_msg
+
+scores = { user: 0, computer: 0, tie: 0 }
 
 loop do
   choice = get_choice
@@ -88,22 +105,16 @@ loop do
 
   prompt "You chose: #{choice}. Computer chose: #{computer_choice}"
 
-  outcome = get_results(choice, computer_choice)
-  display_results(outcome)   
+  match_result = get_results(choice, computer_choice)
   
-  if outcome == 1
-    wins_user +=1 
-  elsif outcome == -1 
-    wins_computer +=1 
-  end 
+  display_results(match_result)
+  increment_scores!(match_result, scores)
+  prompt "User: #{scores[:user]}. Computer: #{scores[:computer]}."
 
-  prompt "User: #{wins_user}. Computer: #{wins_computer}."
-
-  if grand_winner?(wins_user, wins_computer) 
-    display_grand_winner(wins_user, wins_computer) 
-    break unless play_again?
-  end  
-
+  if grand_winner?(scores)
+    display_grand_winner(scores)
+    play_again? ? reset_scores!(scores) : break 
+  end
 end
 
 prompt "Good bye!"
