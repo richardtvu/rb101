@@ -60,7 +60,6 @@ def increment_scores!(outcome, scores)
   scores[outcome] += 1
 end
 
-
 def grand_winner?(scores)
   return true if scores[:user] >= 3 || scores[:computer] >= 3
   false
@@ -77,9 +76,9 @@ def display_grand_winner(scores)
   else prompt_grand_winner "Computer is the grand winner!" end
 end
 
-  def reset_scores!(scores)
-    scores.transform_values! { |_value| 0 }
-  end
+def reset_scores!(scores)
+  scores.transform_values! { |_value| 0 }
+end
 
 #========================== MAIN ===========================
 
@@ -106,14 +105,14 @@ loop do
   prompt "You chose: #{choice}. Computer chose: #{computer_choice}"
 
   match_result = get_results(choice, computer_choice)
-  
+
   display_results(match_result)
   increment_scores!(match_result, scores)
   prompt "User: #{scores[:user]}. Computer: #{scores[:computer]}."
 
   if grand_winner?(scores)
     display_grand_winner(scores)
-    play_again? ? reset_scores!(scores) : break 
+    play_again? ? reset_scores!(scores) : break
   end
 end
 
