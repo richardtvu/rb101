@@ -33,4 +33,87 @@ advice = advice.gsub("important", "urgent")
 advice.gsub!("important", "urgent")
 ``` 
 
+### Question 4: What's the difference between the Array methods `#delete_at` and `#delete`? 
+
+```rb
+numbers = [1, 2, 3, 4, 5]
+
+numbers.delete_at(1)
+numbers.delete(1)
+```
+
+- `delete_at` will remove and return the item at the index psssed in. 
+- - `delete` will remove the element whose value matches the value passed in. 
+
+### 5. Programmatically determine if 42 lies between 10 and 100.
+
+```rb
+p (10..100).include?(42)
+```
+
+### 6. What are two different ways to pre-pend a sub-string to a string? 
+
+```rb
+derp = "x100"
+
+puts complete_saying = "derp" + derp 
+
+# Or second way... 
+derp = "x100"
+derp.sub!("x", "derpx")
+puts derp
+
+# Or third way. 
+
+derp = "x100"
+derp.prepend("derp", " ",)
+puts derp
+
+# 4th way 
+
+derp = "x100"
+puts 'derp '  << derp 
+```
+
+### 7. How do you un-nest an array? 
+
+Use the `#flatten` method. 
+
+```rb
+
+flintstones = ["Fred", "Wilma"]
+flintstones << ["Barney", "Betty"]
+flintstones << ["BamBam", "Pebbles"]
+
+p flintstones 
+
+flintstones = flintstones.flatten
+p flintstones
+```
+
+### 8. How do you get an array of only two elements from a hash with several key-value pairs? 
+
+Manual: 
+- Convert the hash into an array. 
+- Assign sub-array representing the key-value pair of interest to a new variable.
+
+```rb
+h = {foo: 0, bar: 1, baz: 2}
+kv = h.to_a[1] # => => [:bar, 1]
+```
+
+`#assoc` method:
+- Input: Pass in the key. 
+- Output: A new array containing the key-value pair or nil. 
+
+```rb
+h = {foo: 0, bar: 1, baz: 2}
+h.assoc(:bar) # => [:bar, 1]
+```
+
+
+
+
+
+```
 
