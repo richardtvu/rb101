@@ -12,11 +12,15 @@ Can't stress enough that PEDAC isn't an arbitrary heuristic meant for getting th
 
 - Sam Swire (Check)
 
-## High vs Low-Level
+## Take-Aways
 
 - High: Abstract, don't be super detailed. 
-- Low: Avoid fuzziness.
-
+- Low: Avoid fuzziness. What is **fuzziness**?
+  - A fuzzy step is where you can't do 1:1 translation into code.
+  - When encountered, expand that step into more detailed steps (probably as a helper method). 
+- Flexibility: Make multiple high-level algorithms, in case low-ones don't work out. 
+- Whenever you write code that's different from algo, go back and update the algo. Why?
+  - Updated algos will help you step back into abstract problem solving mode more easily when you hit a road block. 
 
 ## Common mistakes
 
