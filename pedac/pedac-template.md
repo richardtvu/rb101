@@ -1,29 +1,29 @@
-# Spencer's P(GR)U(MA)SC
+# PEDAC Template
 
 ```ruby
 
 
-
-
 =begin
-# -------------------------------------- Problem ----------------------------
-Goal
+# Problem 
+- Input:
+- Output: 
+- Requirements: 
 
+- Implicit Requirements:
 
-Rules
+- Questions: 
 
+# Examples 
 
+# Data Structure
+- Intermediate? 
 
-# -------------------------------------- Understand -------------------------
-Model
+# Algorithm
 
+Hi-level algo(s) 
 
-Abstract
-  
+Lo-level algo(s) 
 
-# -------------------------------------- Slice ------------------------------
-
-  
 
 # -------------------------------------- Code -------------------------------
 =end
