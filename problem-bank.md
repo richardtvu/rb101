@@ -1,6 +1,7 @@
 # Problem Bank 
 
 ## `Hash` - `select`. 
+Credit: Maddy N for solution. 
 
 ```
 words = %w(hello goodbye goodnight)
