@@ -15,7 +15,7 @@ https://launchschool.com/exercises/675bc8c9
 
 - Questions: 
   - What do you return if the input integer is less than 3? 
-    - Probably 0. 
+    - Probably []. 
 
 # Examples 
 
