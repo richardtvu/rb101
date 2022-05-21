@@ -7,10 +7,10 @@
   - [ ] What error messages am I getting? 
   - [ ] Explore what's happening in irb. 
   - [ ] _Think_ about what need to change, instead of hack and slash. 
-  - [ ] After a period of struggle, take a break and come back later.  
+  - [ ] After a *period of struggle* (see below for guidelines), take a break and come back later.  
 
 Guidelines for when to move on to next phase: 
-- **Pomodoro** = 25 min of focused work, followed by break. 
+- **Pomodoro** = 25 min of focused work, followed by 5 min break. 
 - Easy question: 1 pomodoro. 
 - Medium question: 2 pomodoros, followed by 10-15 min break.  
 - Hard question: 4 pomodoros, followed by 15-30 min break.  
