@@ -98,6 +98,32 @@ def string_to_integer(str)
   sum
 end
 
+
+# Revise code again after reviewing Launch School solution: 
+
+DIGITS = {
+  '0' => 0, '1' => 1, '2' => 2,
+  '3' => 3, '4' => 4, '5' => 5,
+  '6' => 6, '7' => 7, '8' => 8,
+  '9' => 9
+}
+
+def convert_to_ints(chars_arr)
+  chars_arr.map { |char| DIGITS[char] }
+end
+
+
+def string_to_integer(str)
+  digits_arr = str.chars
+  digits_arr = convert_to_ints(digits_arr)
+  sum = 0
+  digits_arr.each do |digit|
+    sum *= 10
+    sum += digit
+  end
+  sum
+end
+
 p string_to_integer('4321') #== 4321
 p string_to_integer('570')  #== 570
 
