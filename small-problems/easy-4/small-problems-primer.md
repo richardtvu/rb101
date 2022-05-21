@@ -8,13 +8,16 @@
   - [ ] Explore what's happening in irb. 
   - [ ] _Think_ about what need to change, instead of hack and slash. 
 
-- [ ]After a period of struggle, take a break and come back later.  
+- [ ] After a period of struggle, take a break and come back later.  
   - e.g. Easy question: 25 min -> Break. 
   - e.g. Medium question => { Medium Break => (25 min -> Break) x 2 -> Longer_Break } 
   - e.g. Hard question => { Long Break Protocol => (25 min -> Break) x 4  -> Longer_Break } 
 
 
 ## Post-Problem Solving Questions 
+
+- [ ] Analyze LS solution vs my solution. 
+- [ ] Compare solution against other students'. 
 
 ### LS Analysis 
 
