@@ -17,23 +17,30 @@ Return the whole number string
 
 =end 
 
-DIGITS_STRS = {
+# Initial Solution Revised
+DIGITS = {
   0=> '0', 1=> '1', 2=> '2', 3=> '3', 4=> '4', 
   5=> '5', 6=> '6', 7=> '7', 8=> '8', 9=> '9'
 }
 
-def digit_to_str(digit)
-  DIGITS_STRS[digit]
-end 
-# (0..9).each { |digit| p digit_to_str(digit)}
-
 
 def integer_to_string(num) 
-  digits_str = num.digits.reverse.map do |digit_char| 
-    digit_to_str(digit_char)
-  end 
-  digits_str.join 
-end 
+  digits_arr = num.digits.reverse.map {|digit_char| DIGITS[digit_char]}
+  digits_arr.join 
+end
+
+# Revision  based on LS solution 
+# DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+# def integer_to_string(num) 
+#   num == 0 ? num_str = "0" : num_str = ""
+#   until num == 0 
+#     num, remainder = num.divmod(10) 
+#     num_str.prepend(DIGITS[remainder])
+#   end
+#   num_str 
+# end 
+
 
 p integer_to_string(4321) #== '4321'
 p integer_to_string(0)    #== '0'
