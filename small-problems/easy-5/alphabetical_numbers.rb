@@ -38,13 +38,16 @@ end
 
 # Official Solution 
 def alphabetic_number_sort(arr) 
-  arr.sort_by { |number| NUM_WORDS[number] }
+  arr.sort_by! { |number| NUM_WORDS[number] }
 end 
 
 # Further Exploration 
 def alphabetic_number_sort(arr) 
   arr.sort { |num1, num2| NUM_WORDS[num1] <=> NUM_WORDS[num2] }
 end 
+
+# Why does LS use Enumerable#sort_by instead of Array#sort_by!?
+# The only thing I can think of is perhaps we didn't want to mutate the original object, in case we'd want to reuse the object somewhere else? 
 
 p alphabetic_number_sort((0..19).to_a) == [
   8, 18, 11, 15, 5, 4, 14, 9, 19, 1, 7, 17,
