@@ -32,33 +32,21 @@ Return the string.
 =end 
 
 DEGREE = "\xC2\xB0"
-SECONDS = '"'
 
-
-****Format the minutes, seconds, etc with leading zeros****
 def dms(angle) 
   degrees = angle.floor 
   degrees_remainder = angle - angle.floor 
-  minutes_overall   = degrees_remainder * 60
-  minutes           = minutes_overall.floor 
-  minutes_remainder = minutes_overall - minutes_overall.floor
+  minutes_overall   = (degrees_remainder * 60)
+  minutes           = minutes_overall.round
+  minutes_remainder = minutes_overall - minutes_overall.round
   seconds_overall   = minutes_remainder * 60 
-  seconds           = seconds_overall.floor 
+  seconds           = seconds_overall.round
 
-  puts "#{degrees}#{DEGREE}:#{minutes}':#{seconds}\""
 
+  minutes = sprintf('%02d', minutes)
+  seconds = sprintf('%02d', seconds)
+  "#{degrees}#{DEGREE}#{minutes}'#{seconds}\""
 
 end 
-
-
-# Examples/Test Cases
-# dms(0) == %(0°00'00")
-# dms(360) == %(360°00'00") || dms(360) == %(0°00'00")
-# dms(30) == %(30°00'00")
-
-dms(76.73) == %(76°43'48")
-# dms(254.6) == %(254°36'00")
-# dms(93.034773) == %(93°02'05")
-
 
 
