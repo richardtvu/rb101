@@ -1,6 +1,6 @@
 # SPOT 2022-05-29
 
-Keyword of the Day: **Semantic satiation**, 
+Keyword of the Day: **Semantic satiation**, when words lose meaning for a listener from overuse. 
 
 ## Written Assessment Prep 
 
@@ -51,11 +51,10 @@ end
 - Invoke `each` on the array pointed to by local variable `array`.
 - On line `[blah]`, `puts` outputs the value of `x`.
 - Specify _what_ will be assigned to:
-  -e.g. On each iteration of `each`, `each` passes each element into the block, where the element is assigned to local variable `x`. 
+  - e.g. On each iteration of `each`, `each` passes each element into the block, where the element is assigned to local variable `x`. 
 - A parameter is only a parameter until we assign the parameter to a value, then it is a variable. 
   - Given the method header: `def some_method(arg)`, describe: `some_method("hello")`
     - We invoke `some_method` and pass in the string object `"hello"`. Within the method, we assign local variable `arg` to "hello". 
-  - 
 
 
 ### Given `array = [1, 2, 3, 4, 5]`, describe what this code does and return? 
