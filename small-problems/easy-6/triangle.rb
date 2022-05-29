@@ -61,6 +61,8 @@ def triangle(n, hor_dir =:right, upside = :up)
   end 
 end 
 
+# Test Cases 
+
 triangle(5)
 triangle(9)
 triangle(5, :left)
@@ -69,3 +71,25 @@ triangle(5, :left, :down)
 triangle(9, :left, :down)
 triangle(5, :right, :down)
 triangle(9, :right, :down)
+
+
+# Refactored based on Hunter Amin's Solution 
+def triangle(n, base_corner = :bottom_right)
+  stars = Array.new(n) { |i| ("*" * (i+1)).rjust(n) }
+  case base_corner
+  when :bottom_right then puts stars 
+  when :bottom_left  then puts stars.map(&:reverse)
+  when :top_left     then puts stars.map(&:reverse).reverse 
+  when :top_right    then puts stars.reverse
+  end 
+end  
+
+triangle(5)
+triangle(5, :top_right)
+triangle(5, :bottom_left)
+triangle(5, :top_left)
+
+triangle(9)
+triangle(9, :top_right)
+triangle(9, :bottom_left)
+triangle(9, :top_left)
