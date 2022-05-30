@@ -38,6 +38,7 @@ Join the words back together and return.
 
 =end
 
+# Initial Solution 
 def lowercase?(char)
   char.match(/[a-z]/)
 end
@@ -59,6 +60,17 @@ def swapcase(str)
   words = str.split(' ')
   words.map { |word| swapcase_word(word) }.join(' ')
 end
+
+# Revised Solution 
+
+def swapcase(str) 
+  characters = str.chars.map do |char|
+    if    lowercase?(char) then char.upcase
+    elsif uppercase?(char) then char.downcase
+    else char end
+  end
+  characters.join 
+end 
 
 p swapcase('CamelCase')         == 'cAMELcASE'
 p swapcase('Tonight on XYZ-TV') == 'tONIGHT ON xyz-tv'
