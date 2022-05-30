@@ -25,14 +25,23 @@ Examples
 
 # Initial Solution 
 def word_cap(string) 
-  string.split.map {|word| word.capitalize }.join( ) 
+  string.split.map {|word| word.capitalize }.join(' ') 
 end 
 
 # Refactored solution
 def word_cap(string) 
-  string.split.map(&:capitalize).join( ) 
+  string.split.map(&:capitalize).join(' ') 
+end 
+
+# Further Exploration 
+# Bethany P.
+def word_cap(string) 
+  capped_words = string.split.map! do |word|
+    word[0].upcase + word[1..].downcase 
+  end 
+  capped_words.join(" ")
 end 
 
 p word_cap('four score and seven') == 'Four Score And Seven'
 p word_cap('the javaScript language') == 'The Javascript Language'
-p word_cap('this is a quoted word') == 'This Is A quoted Word'
+p word_cap('this is a "quoted" word') == 'This Is A "quoted" Word'
