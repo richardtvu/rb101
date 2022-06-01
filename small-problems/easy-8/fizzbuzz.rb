@@ -14,4 +14,6 @@ Data Structures?
 
 Algorithrm 
 
+Iterate through the numbers from 
+
 =end 
