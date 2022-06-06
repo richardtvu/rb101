@@ -35,15 +35,54 @@ def fibonacci(n)
   n_minus_1 + n_minus_2
 end 
 
-# Refactored for Readabiilty 
+# Refactored for Readabiilty based on LS solution and Xulln's solution. 
 def fibonacci(nth) 
-  second_to_last, last = [1, 1]
+  prev, curr = [1, 1]
   3.upto(nth) do
-    second_to_last, last = [last, last + second_to_last] 
+    prev, curr = [curr, curr + prev] 
   end 
 
-  last 
+  curr 
 end 
+
+# Refactored again based on Ned S.'s solution: 
+def fibonacci(nth) 
+  last_two = [1, 1]
+  3.upto(nth) do
+    last_two = [last_two.last, last_two.sum] 
+  end 
+
+  last_two.last 
+end 
+
+# Aaron T. 's Fast Doubling Algo 
+def fibonacci_fast_doubling(n) 
+  return 1 if n <= 2
+
+  nums = []
+  while n > 0 
+    nums << n 
+    n /= 2
+  end 
+
+  a = 0 
+  b = 1 
+
+  until nums.empty? 
+    n = nums.pop 
+    c = a * ((b * 2) - a) 
+    d = a * a + b * b 
+    if n.odd? 
+      a = d
+      b = c + d 
+    else 
+      a = c 
+      b = d 
+    end 
+  end 
+  a 
+end 
+
 
 p fibonacci(2) 
 p fibonacci(3) 
