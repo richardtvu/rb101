@@ -1,75 +1,102 @@
+=begin
+Input: File
+Output: String
+Requirements:
+- Read in a text file.
+- Print the longest sentence of the text file.
+- Print the # of words in the longest sentence.
+- Consider a sentence as a group of words ending with a period, exclamation point, or question mark.
+- Consider a word as a group of characters that aren't spaces or sentence-ending characters.
+- Count `--` as a word.
+
+Data Structures:
+- Array
+
+Algorithm:
+- Read in the text file.
+- Split up the text file into a list of sentences.
+- Find the largest sentence.
+- Find the # of words in the largest sentence.
+- Print the largest sentence.
+- Print the # of words in the largest sentence.
+=end
+
+# Ask JD! Curiosity: How do I pass in a string when I call the program, e.g. `ruby retry_longest_sentence.rb [String]`? I mean, how do I take in that string input and use it in the program?
+
+
+
 =begin 
-Input: File (text) 
-Output: String 
-Requirements: 
-- Read the contents of a text file 
-- Print the longest sentence in the file, based on # of words. 
-- Print the # of words in the longest sentence. 
-- Sentences are groups of words ending with:
-  - Periods (`.`), 
-  - Exclamation points, `!`, or
-  - Question Marks `?`
-- Words are group of characters that aren't only spaces or sentence-ending characters. 
 
-Data Structure? 
-- Array 
+For whatever reason, I felt irritated by the extra spaces in my result 
+when I ran LS's solution (See "the most" with a large stretch of before
+the next line). 
 
-Algorithm: 
-- Read in the text content. 
-- Split up the text into a list of sentences, based on periods, exclamation points, and question marks. 
-- Sort the sentences in order of ascending size. 
-- Get the last sentence. 
-- Count the number of words in the last sentence. 
-- Print the last sentence. 
-- Print the number of words. 
+```ruby 
+"I have seen," he said, "the most
+beautiful scenes of my own country; I have visited the lakes of Lucerne
+... 
+Containing 157 words
+``` 
 
+Thus, I spent several hours creating my own version of a word_wrapper to 
+keep sentences under a certain length, e.g. 80 (chosen for the terminal). 
+See below for  
+
+Result - a more pleasing, in my eyes, display of the longest sentence. 
+```ruby
+"I have seen," he said, "the most beautiful scenes of my own country; I have
+visited the lakes of Lucerne and Uri, where the snowy mountains descend almost
+... 
+Number of words: 157
+``` 
 =end 
 
-# text = <<~EOT
-#   Abra cadabra. 
-#   Molly! Oy?
-#   Magickery alloys.
-# EOT
+def longest_sentence_from_file(file_path)
+  sentences = File.open(file_path).read
+                  .gsub(/\n/, ' ')  # Gets rid of the pesky line feeds.
+                  .split(/\.|\?|!/) # Splits based on `.`, `?`, and `!`.
 
-# def write_file(fileName, text)
-#   File.write(fileName, text)
-# end 
+  sentences.max_by { |sentence| sentence.split.size }.strip
+end
 
-# write_file("t.txt", text)
+def line_less_than_char_max(sentence, char_max) 
+  words = []
+  sentence_words = sentence.split(" ")
+  last_word_index = 0 
 
-def read_file(filePathName) 
-  strings = [] 
-  open(filePathName) do |file|
-    strings = file.readlines 
-  end 
+  until last_word_index > char_max
+    break if sentence_words.empty?
+    words << sentence_words.shift 
+    last_word_index +=  (words.last.size + 1)
+  end
+  words.pop 
+
+  last_word_index = words.join(" ").size
+  sentence[0..last_word_index]
+end 
+
+def word_wrap(sentence, char_max = 80)
+  lines_arr = []
+
+  while sentence.size > char_max
+    line = line_less_than_char_max(sentence, char_max)
+
+    lines_arr << line
+    sentence.delete_prefix!(line)
+  end
   
-  strings.map do |string|
-    string.chomp!
-  end 
-  strings.join(" ")
-end 
+  lines_arr << sentence
+end
 
-# Input: String 
-# Output: Array of Strings (sentences) 
-def get_sentences(text)
-  text.split(/[?.!]/)
-end 
+def print_longest_sentence(file_path = 'texts/frankenstein.txt')
+  longest_sentence = longest_sentence_from_file(file_path)
+  num_words = longest_sentence.split.size
 
-# example = "Abra cadabra. Molly! Oy?"
-# p get_sentences(example) 
+  puts word_wrap(longest_sentence)
+  puts "Number of words: #{num_words}"
+end
 
-def longest_sentence(filePath = "texts/t.txt")
-  text = read_file(filePath)
 
-  sentences = get_sentences(text).sort { |a,b| a.size <=> b.size }
-  longest_sentence = sentences.last
-  num_words = longest_sentence.split.size 
+print_longest_sentence('texts/lincoln.txt')
+print_longest_sentence('texts/frankenstein.txt')
 
-  puts "The longest sentence has #{num_words} words."
-  puts "Longest sentence: #{longest_sentence}."
-end 
-
-longest_sentence('texts/lincoln.txt')
-longest_sentence('texts/frankenstein.txt')
-
-# Continue by creating the file with Lincoln's address and then testing against that. 
