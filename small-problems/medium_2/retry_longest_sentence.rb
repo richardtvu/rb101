@@ -23,21 +23,6 @@ Algorithm:
 
 # Ask JD! Curiosity: How do I pass in a string when I call the program, e.g. `ruby retry_longest_sentence.rb [String]`? I mean, how do I take in that string input and use it in the program?
 
-# def read_sentences_from_file(file_path = 'texts/t.txt')
-#   sentences = File.open(file_path)
-#       .readlines        # Gets a list of all lines in the text file.
-#       .map(&:strip)     # Gets rid of line feeds and extra whitespaces. 
-#       .join(" ")        # Reconstructs text.
-#       .split(/\.|\?|!/) # Splits sentences based on sentence-ending chars.
-#       .map(&:strip)     # Gets rid of leading and trailing spaces. 
-# end
-
-def read_sentences_from_file(file_path = 'texts/frankenstein.txt')
-  sentences = File.open(file_path)
-    .read
-    .gsub(/\n/, ' ')  # Gets rid of the pesky line feeds. 
-    .split(/\.|\?|!/) 
-end
 
 def longest_sentence_from_file(file_path)
   sentences = File.open(file_path).read
