@@ -42,6 +42,28 @@ def block_word?(str)
   true 
 end
 
+# Attempt to Recall LS Solution? 
+=begin 
+
+ALGO? 
+Initialize a constant, `BLOCKS`, containing 2-letter blocks. 
+
+Define a method `block_word?` that accepts a `str`. Upcase the string. Iterate through the blocks. Count the number of occurrences of either letter in block in the string. Return false if the count is 2 or greater, which indicates either both letters are used or the block is used more than once. Otherwise, at the end of iteratation, return true. 
+
+
+=end 
+
+BLOCKS = %w(BO XK DQ CP NA GT RE FS JW HU VU LY ZM).freeze 
+
+def block_word?(str) 
+  up_str = str.upcase 
+  BLOCKS.none? ( |block| up_str.count(block) >= 2 )
+end 
+
+
 p block_word?('BATCH') == true
 p block_word?('BUTCH') == false
 p block_word?('jest')  == true
+
+
+
