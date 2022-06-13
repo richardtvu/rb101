@@ -78,3 +78,6 @@ puts letter_percentages('AbCd +Ef')   #== { lowercase: 37.5, uppercase: 37.5, ne
 puts letter_percentages('123')        #== { lowercase: 0.0, uppercase: 0.0, neither: 100.0 }
 
 puts letter_percentages('abcdefGHI')
+
+
+
