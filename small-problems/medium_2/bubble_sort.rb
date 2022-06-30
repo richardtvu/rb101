@@ -69,7 +69,10 @@ def bubble_sort!(arr)
   end 
 end 
 
-# Further Exploration - Tail End Optimization
+# Further Exploration - Tail End Optimization: Using Helper 
+# Methods and More Descriptive Variable Names In An Attempt to
+# Make Bubble Sort Easier to Understand 
+
 def swap!(arr, prev_i, curr_i) 
   arr[curr_i], arr[prev_i] = arr[prev_i], arr[curr_i]
   nil 
@@ -94,7 +97,35 @@ def bubble_sort!(arr)
 end 
 
 =begin 
-When Launch School (LS) says that the optimization "skips looking at tail elements", I think LS 
+Here's how I understand the `bubble_sort!` with the tail-end recursion: On the first iteration, the largest number will end up at the end. Therefore, you don't have to check the last index. On the second iteration, the 2nd largest number will end up in the 2nd to last index. You can ignore the 2nd to last index now. After the n-th iteration, you can ignore the comparing the elements in n-th to last index. 
+
+In other words: After you've sorted an element correctly, you get to ignore that element and any elements that come after. Let's look at Launch School's example and condense it: 
+
+```ruby
+[6, 2, 7, 1, 4] # 6 > 2, so swap those two.
+[2, 6, 7, 1, 4] # 7 > 1, so swap 1 & 7.   
+[2, 6, 1, 7, 4] # 7 > 4, so swap 4 & 7.
+[2, 6, 1, 4, 7] # 6 > 1, so swap 6 & 1.
+
+# 7 is now correctly sorted, so you can stop processing 7. 
+[2, 1, 6, 4, 7] # 6 > 4, so swap 6 & 4. 
+
+# 6 is now correctly sorted, so you ignore 6 and 7. 
+[2, 1, 4, 6, 7] # 2 > 1, so swap 2 & 1. 
+
+# 4 is correctly sorted, so you ignore 4 and everything else.
+[2, 1, 4, 6, 7] # 2 > 1, so swap 2 & 1. 
+
+# 2 is now correctly sorted, so you ignore 2 and everything after. 
+[1, 2, 4, 6, 7] 
+
+# 1 is correctly sorted because there isn't another element to compare 1 with.
+[1, 2, 4, 6, 7] # No more swaps. Done. 
+``` 
+
+You can notice how the tail-end optimization means we sort through less and less elements. By contrast, the unoptimized bubble sort will keep trying to sort elements until the end of the list... even if those elements are already sorted. 
+
+Although bubble sort is still pretty bad, you can take the further exploration as an example of how to make your algorithms more efficient. In the future, when you want to refactor/make an algorithm more efficient, you can ask yourself: "Am I duplicating any steps? Do I have to iterate through the entire list every time?"
 
 =end 
 
