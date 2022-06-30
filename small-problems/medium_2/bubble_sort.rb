@@ -70,25 +70,33 @@ def bubble_sort!(arr)
 end 
 
 # Further Exploration - Tail End Optimization
-def swap_prev_with_curr!(arr, index) 
-  arr[index], arr[index-1] = arr[index-1], arr[index]
+def swap!(arr, prev_i, curr_i) 
+  arr[curr_i], arr[prev_i] = arr[prev_i], arr[curr_i]
   nil 
 end 
 
 def bubble_sort!(arr) 
-  n = arr.size 
-  until n <= 1
+  last_index_to_check = arr.size 
+
+  until last_index_to_check <= 1
     last_index_swapped = 0 
-    1.upto(n-1) do |index|
+
+    1.upto(last_index_to_check-1) do |index|
       if arr[index-1] > arr[index] 
-        swap_prev_with_curr!(arr, index)
+        swap!(arr, index-1, index)
         last_index_swapped = index 
       end 
     end 
-    n = last_index_swapped
+
+    last_index_to_check = last_index_swapped
   end 
   nil
 end 
+
+=begin 
+When Launch School (LS) says that the optimization "skips looking at tail elements", I think LS 
+
+=end 
 
 
 
