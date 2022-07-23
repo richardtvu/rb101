@@ -10,7 +10,6 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
-# 1. Display board.
 # Expects a board as a flattened hash, e.g. {1=>' ', ..., 9=>' '}.
 def display_board(brd) # rubocop:disable Metrics/AbcSize
   system 'clear'
@@ -43,15 +42,15 @@ end
 def player_places_piece!(brd, player_marker = PLAYER_MARKER)
   square = nil
   loop do
-    empty_squares = empty_squares(brd)
+    empty_squares = empty_squares(brd).map(&:to_s)
     prompt "Choose a square: #{empty_squares.join(', ')}"
-    square = gets.chomp.to_i
+    square = gets.chomp
     break if empty_squares.include?(square)
 
     puts 'Choose an empty square...'
   end
 
-  brd[square] = player_marker
+  brd[square.to_i] = player_marker
   nil
 end
 
@@ -126,7 +125,7 @@ end
 # Bonus TTT #5 - Computer Turn Refinements
 def determine_order
   choices_hash = {
-    1 => :player, 2 => :computer, 3 => %i(player computer).sample
+    '1' => :player, '2' => :computer, '3' => %i(player computer).sample
   }
   prompt "Who goes first? Enter #{joinor(choices_hash.keys)}"
   prompt '1) Player'
@@ -134,7 +133,7 @@ def determine_order
   prompt '3) Random'
 
   loop do
-    order = gets.chomp.to_i
+    order = gets.chomp
     break choices_hash[order] if choices_hash[order]
 
     prompt 'Invalid choice...'
@@ -164,6 +163,21 @@ def make_moves!(board, current_player)
   end
 end
 
+def play_again?
+  prompt 'Play again? (press enter to keep going or type n/no to stop)'
+  loop do
+    answer = gets.chomp
+    case answer.downcase
+    when ''
+      return true
+    when 'n', 'no'
+      return false
+    end
+    prompt 'Invalid choice...'
+  end
+  # answer.downcase.start_with?('y')
+end
+
 def play
   loop do
     board = initialize_board
@@ -177,9 +191,7 @@ def play
       prompt "It's a tie!"
     end
 
-    prompt 'Play again? (y or n)'
-    answer = gets.chomp
-    break unless answer.downcase.start_with?('y')
+    break unless play_again?
   end
 
   prompt 'Thanks for playing Tic Tac Toe. Goodbye!'
