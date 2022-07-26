@@ -67,62 +67,60 @@ def dup_chars(str)
   last_char = ''
   count = 0
   str.chars.each do |char|
-    if char != last_char
-      if count >= 2
-        dup_char_seqs << last_char * count
-      end
-      count = 1
-    else
+    if char == last_char
       count += 1
+    else
+      dup_char_seqs << (last_char * count) if count >= 2
+      count = 1
     end
-    last_char = char 
+    last_char = char
   end
-  dup_char_seqs << str[-1] * count if count >= 2
-  dup_char_seqs.uniq.sort_by {|seq| -seq.size }
+  dup_char_seqs << (str[-1] * count) if count >= 2
+  dup_char_seqs.uniq.sort_by { |seq| -seq.size }
 end
 
 # p dup_chars('addd laadd maaad')
-# p dup_chars('ddaaiillyy ddoouubbllee') 
-# p dup_chars('4444abcabccba') 
-# p dup_chars('ggggggggggggggg') 
-# p dup_chars('a') 
+# p dup_chars('ddaaiillyy ddoouubbllee')
+# p dup_chars('4444abcabccba')
+# p dup_chars('ggggggggggggggg')
+# p dup_chars('a')
 # p dup_chars('')
 
 def crunch(str)
   crunched_str = str
-  dup_chars(str).each do |dups| 
-    crunched_str.gsub!(dups, dups[0]) 
-  end 
+  dup_chars(str).each do |dups|
+    crunched_str.gsub!(dups, dups[0])
+  end
   crunched_str
 end
 
 #---------LS Solution Modified -------
-def crunch(text) 
-  crunch_text = '' 
-  text.chars.each_with_index do |char, index| 
+def crunch(text)
+  crunch_text = ''
+  text.chars.each_with_index do |char, index|
     crunch_text << char unless char == text[index + 1]
-  end 
-  crunch_text 
-end 
+  end
+  crunch_text
+end
 
 # -------- Post Student Solutions Revision -----
-def crunch(text) 
+def crunch(text)
   text.chars.each_with_object('') do |char, crunch_text|
     crunch_text << char unless char == crunch_text[-1]
-  end 
-end 
+  end
+end
 
-def crunch(str) 
-  saved = ' ' 
+def crunch(str)
+  saved = ' '
   new_str = str.chars.select do |char|
-    if char == saved then false 
-    else 
-      saved = char 
-      true 
-    end 
-  end 
+    if char == saved then false
+    else
+      saved = char
+      true
+    end
+  end
   new_str.join
-end 
+end
 
 def crunch(input)
   result = ''

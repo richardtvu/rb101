@@ -40,14 +40,14 @@ require 'date'
 MONTHS = (1..12).to_a
 
 def day?(date, desired_day)
-  case (desired_day.downcase)
-  when "sunday"     then date.sunday?
-  when "monday"     then date.monday?
-  when "tuesday"    then date.tuesday?
-  when "wednesday"  then date.wednesday?
-  when "thursday"   then date.thursday?
-  when "friday"     then date.friday?
-  when "saturday"   then date.saturday?
+  case desired_day.downcase
+  when 'sunday'     then date.sunday?
+  when 'monday'     then date.monday?
+  when 'tuesday'    then date.tuesday?
+  when 'wednesday'  then date.wednesday?
+  when 'thursday'   then date.thursday?
+  when 'friday'     then date.friday?
+  when 'saturday'   then date.saturday?
   end
 end
 
@@ -55,12 +55,12 @@ def week_date_occurrences(year, day_of_week, day_of_month)
   dates = MONTHS.map do |month|
     Date.new(year, month, day_of_month)
   end
-  
+
   dates.count { |date| day?(date, day_of_week) }
 end
 
 def friday_13th(year)
-  week_date_occurrences(year, "friday", 13)
+  week_date_occurrences(year, 'friday', 13)
 end
 
 p friday_13th(2015) #== 3

@@ -24,7 +24,7 @@ def upper_lower(char, uppercase)
 end
 
 def staggered_case_all_chars(str, first_letter_upper = true)
-  first_letter_upper ? uppercase = false : uppercase = true
+  uppercase = first_letter_upper ? false : true
   characters = str.chars.map do |char|
     (uppercase = !uppercase) ? char.upcase : char.downcase
   end
@@ -32,7 +32,7 @@ def staggered_case_all_chars(str, first_letter_upper = true)
 end
 
 def staggered_case_only_letters(str, first_letter_upper = true)
-  first_letter_upper ? uppercase = false : uppercase = true
+  uppercase = first_letter_upper ? false : true
   characters = str.chars.map do |char|
     if letter?(char)
       uppercase = !uppercase
@@ -45,7 +45,10 @@ def staggered_case_only_letters(str, first_letter_upper = true)
 end
 
 def staggered_case(str, first_letter_upper = true, only_count_letters = true)
-  return staggered_case_all_chars(str, first_letter_upper) unless only_count_letters
+  unless only_count_letters
+    return staggered_case_all_chars(str,
+                                    first_letter_upper)
+  end
 
   staggered_case_only_letters(str, first_letter_upper)
 end

@@ -34,7 +34,7 @@ Initialize a percentages hash with the percentages.
 
 =end
 
-# Initial Solution 
+# Initial Solution
 def letter_percentages(str)
   lowercase_count = str.count('a-z')
   uppercase_count = str.count('A-Z')
@@ -48,7 +48,7 @@ def letter_percentages(str)
   percentages.each_pair { |type, perc| percentages[type] = perc.round(1) }
 end
 
-# Refactored post LS viewing. 
+# Refactored post LS viewing.
 def letter_percentages(str)
   counts = {}
   percentages = {}
@@ -70,14 +70,10 @@ def calculate(percentages, counts, length)
   percentages.each { |type, perc| percentages[type] = perc.round(1) }
 end
 
-
-# LS using 
+# LS using
 
 puts letter_percentages('abCdef 123') #== { lowercase: 50.0, uppercase: 10.0, neither: 40.0 }
 puts letter_percentages('AbCd +Ef')   #== { lowercase: 37.5, uppercase: 37.5, neither: 25.0 }
 puts letter_percentages('123')        #== { lowercase: 0.0, uppercase: 0.0, neither: 100.0 }
 
 puts letter_percentages('abcdefGHI')
-
-
-

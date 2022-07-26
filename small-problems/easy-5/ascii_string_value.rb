@@ -20,8 +20,8 @@ def ascii_value(str)
   str.empty? ? 0 : str.chars.map(&:ord).sum
 end
 
-# Further Exploration 
-char.ord.chr == char 
+# Further Exploration
+char.ord.chr == char
 
 p ascii_value('Four score')    == 984
 p ascii_value('Launch School') == 1251

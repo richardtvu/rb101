@@ -38,17 +38,16 @@ def reverse(arr)
   reversed_arr
 end
 
-def reverse(array)
-  rev_arr = [] 
+def reverse(_array)
+  rev_arr = []
   arr.reverse_each { |element| rev_arr << element }
   result_array
-end 
+end
 
 # Further Exploration
 def reverse(arr)
   arr.each_with_object([]) { |elem, rev_arr| rev_arr.prepend(elem) }
 end
-
 
 p reverse([])                   #== [] # => true
 p reverse(['abc'])              #== ['abc'] # => true

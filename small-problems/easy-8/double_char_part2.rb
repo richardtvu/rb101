@@ -14,18 +14,18 @@ Return the str.
 
 =end
 
-VOWELS = ['a', 'e', 'i', 'o', 'u']
+VOWELS = %w(a e i o u)
 CONSONANTS = ('a'..'z').to_a.delete_if { |char| VOWELS.include?(char) }
 
 def consonant?(char)
-  CONSONANTS.include?(char.downcase) 
-end 
+  CONSONANTS.include?(char.downcase)
+end
 
 def double_consonants(str)
-  str.chars.map { |ch| consonant?(ch) ? ch * 2 : ch}.join
+  str.chars.map { |ch| consonant?(ch) ? ch * 2 : ch }.join
 end
 
 p double_consonants('String') #== "SSttrrinngg"
-p double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"
-p double_consonants("July 4th") == "JJullyy 4tthh"
-p double_consonants('') == ""
+p double_consonants('Hello-World!') == 'HHellllo-WWorrlldd!'
+p double_consonants('July 4th') == 'JJullyy 4tthh'
+p double_consonants('') == ''

@@ -47,7 +47,7 @@ def normalize_mins_in_0_to_1439(mins)
 end
 
 def after_midnight(time)
-  hours, mins = time.split(":").map(&:to_i)
+  hours, mins = time.split(':').map(&:to_i)
   hours *= MINUTES_PER_HOUR
   normalize_mins_in_0_to_1439(hours + mins)
 end

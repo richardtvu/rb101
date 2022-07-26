@@ -49,83 +49,81 @@ def thousand_lights(repetitions)
   lights.select { |_, on| on }.keys
 end
 
-# Revision after using brute force solution to check hypothesis 
+# Revision after using brute force solution to check hypothesis
 
-def mathy_lights(num_lights) 
-  lights_on_arr = [] 
+def mathy_lights(num_lights)
+  lights_on_arr = []
 
   while light_no**2 <= num_lights
-    lights_on_arr << light_no**2 
+    lights_on_arr << (light_no**2)
     light_no += 1
-  end 
+  end
 
   lights_on_arr
-end 
+end
 
-# Refactor mathy_lights after viewing LS solution 
+# Refactor mathy_lights after viewing LS solution
 
-def mathy_lights(num_lights) 
-  lights_on = [] 
-  
-  1.upto(num_lights**0.5)  { |light_no| lights_on << light_no**2 }
+def mathy_lights(num_lights)
+  lights_on = []
+
+  1.upto(num_lights**0.5) { |light_no| lights_on << (light_no**2) }
 
   lights_on
-end 
+end
 
-# Further Exploration: Printing the Rounds and lights... 
+# Further Exploration: Printing the Rounds and lights...
 
-def init_lights(num_lights) 
-  lights = {} 
-  (1..num_lights).each { |light| lights[light] = "off" }
-  lights 
-end 
+def init_lights(num_lights)
+  lights = {}
+  (1..num_lights).each { |light| lights[light] = 'off' }
+  lights
+end
 
 def flip_lights(lights, round)
-  lights.each do |light, state| 
-    if light % round == 0 
-      if    state == "on"   then state = "off" 
-      elsif state == "off"  then state = "on" end
+  lights.each do |light, state|
+    if light % round == 0
+      if    state == 'on'   then state = 'off'
+      elsif state == 'off'  then state = 'on' end
 
       lights[light] = state
-    end 
+    end
   end
 end
 
 def select_lights(lights, state)
-  lights = lights.select {|_, status | state == status  }.keys
-  lights
-end 
+  lights.select { |_, status| state == status }.keys
+end
 
 def format_plurals(lights)
-  case (lights.size) 
+  case lights.size
   when 1 then lights[0]
-  when 2 then lights.join(" and ")
-  else        lights[0..-2].join(", ") + " and " + lights[-1].to_s
-  end 
-end 
+  when 2 then lights.join(' and ')
+  else        lights[0..-2].join(', ') + ' and ' + lights[-1].to_s
+  end
+end
 
-def print_round_results(round, lights) 
-  if select_lights(lights, "off").empty? 
-    puts "round #{round}: every light is turned on" 
-    return 
-  end 
+def print_round_results(round, lights)
+  if select_lights(lights, 'off').empty?
+    puts "round #{round}: every light is turned on"
+    return
+  end
 
-  off = format_plurals(select_lights(lights, "off"))
-  on = format_plurals(select_lights(lights, "on"))
+  off = format_plurals(select_lights(lights, 'off'))
+  on = format_plurals(select_lights(lights, 'on'))
 
   puts %(round #{round}: lights #{off} are now off; #{on} are on)
-end 
+end
 
 def thousand_lights(num_lights)
   lights = init_lights(num_lights)
 
-  1.upto(num_lights) do |round| 
-    lights = flip_lights(lights, round) 
-    print_round_results(round, lights) 
-  end 
+  1.upto(num_lights) do |round|
+    lights = flip_lights(lights, round)
+    print_round_results(round, lights)
+  end
 
-  select_lights(lights, "on")
+  select_lights(lights, 'on')
 end
 
 p thousand_lights(10)
-

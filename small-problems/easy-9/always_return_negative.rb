@@ -1,17 +1,17 @@
-=begin 
+=begin
 
-- Input:  Numeric 
+- Input:  Numeric
 - Output: Numeric
-- Requirements: 
+- Requirements:
   - Return the negative of a positive input.
-  - Return the original number if that number is 0 
-  or negative. 
+  - Return the original number if that number is 0
+  or negative.
 
-=end 
+=end
 
-def negative(num) 
-  num <= 0 ? num : -num 
-end 
+def negative(num)
+  num <= 0 ? num : -num
+end
 
 p negative(5) == -5
 p negative(-3) == -3

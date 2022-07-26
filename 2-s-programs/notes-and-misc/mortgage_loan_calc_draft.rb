@@ -21,7 +21,8 @@ CURRENCY = '$'
 #   Monthly payment
 #   Monthly interest rate
 #   Loan duration in months
-def calculate_payment_plan(_loan_amount, _annual_percentage_rate, _loan_duration_years, loan_duration_months)
+def calculate_payment_plan(_loan_amount, _annual_percentage_rate,
+                           _loan_duration_years, loan_duration_months)
   monthly_payment = ''
   monthly_interest_rate = ''
   loan_duration_months = MIN_LOAN_DURATION_MONTHS
@@ -35,7 +36,8 @@ end
 
 # Accepts the :monthly_payment, :monthly_interest_rate, and :loan_duration_months.
 # Need to find a way to return with 2 decimal places.
-def set_expected_payment_plan(monthly_payment, monthly_interest_rate, loan_duration_months)
+def set_expected_payment_plan(monthly_payment, monthly_interest_rate,
+                              loan_duration_months)
   expected_payment_plan = Hash.new
   expected_payment_plan[:monthly_payment] = monthly_payment
   expected_payment_plan[:monthly_interest_rate] = monthly_interest_rate
@@ -56,5 +58,6 @@ def test_calculate_payment_plan(expected_payment_plan, _loan)
   actual_payment_plan
 
   return true if expected_payment_plan == actual_payment_plan
+
   false
 end

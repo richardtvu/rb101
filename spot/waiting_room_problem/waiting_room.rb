@@ -9,7 +9,6 @@ end
 
 # Constraint: All chairs must be uniquely numbered, e.g. only one 5th chair.
 def groups(chairs_arr, middle_chair)
-  
   chairs = chairs_arr.dup
 
   chairs.delete(middle_chair)
@@ -52,7 +51,6 @@ def sort(seats)
   ordered_groups
 end
 
-
 def select_some_seats(groups_of_seats)
   chairs_chosen = []
   remaining_groups = []
@@ -64,7 +62,7 @@ def select_some_seats(groups_of_seats)
     # binding.pry
     chairs_chosen << middle_chair
     groups(group, middle_chair).each do |grp|
-      remaining_groups << grp unless grp.empty? 
+      remaining_groups << grp unless grp.empty?
     end
   end
   [chairs_chosen, remaining_groups]
@@ -78,6 +76,7 @@ def order_seats_taken(num_seats)
     chairs_chosen, remaining_groups = select_some_seats(groups_of_seats)
 
     break if chairs_chosen.empty?
+
     order_taken.concat(chairs_chosen)
     groups_of_seats = sort(remaining_groups)
   end

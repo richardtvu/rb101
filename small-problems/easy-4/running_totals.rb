@@ -1,30 +1,30 @@
-# Running Totals 
-=begin 
+# Running Totals
+=begin
 Problem:
 - Input: Array (of integers)
-- Outputs: Array (ints) 
-- Requirement: 
-  - Same # of elements 
-  - Running total orginal array 
+- Outputs: Array (ints)
+- Requirement:
+  - Same # of elements
+  - Running total orginal array
 
-Data Structure: 
-- Array 
+Data Structure:
+- Array
 
-Algorithm: 
+Algorithm:
 
-sum 
+sum
 create a new list of numbers
 transform each element in numbers into the running total
-return this new array 
+return this new array
 
-=end 
+=end
 
-def running_total(arr) 
-  sum = 0 
-  arr.map do | num | 
-    sum += num 
-  end 
-end 
+def running_total(arr)
+  sum = 0
+  arr.map do |num|
+    sum += num
+  end
+end
 
 p running_total([2, 5, 13]) == [2, 7, 20]
 p running_total([14, 11, 7, 15, 20]) == [14, 25, 32, 47, 67]

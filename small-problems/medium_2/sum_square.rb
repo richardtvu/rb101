@@ -28,17 +28,16 @@ def sum_square_difference(num)
   sum     = first_n_integers.sum
   squares = first_n_integers.map { |number| number**2 }
 
-  sum**2 - squares.sum
+  (sum**2) - squares.sum
 end
 
 p sum_square_difference(3)    == 22
 p sum_square_difference(10)   == 2640
 p sum_square_difference(1)    == 0
-p sum_square_difference(100)  == 25164150
+p sum_square_difference(100)  == 25_164_150
 
-
-# Review this answer 
-=begin 
+# Review this answer
+=begin
 It's helpful to know that the Range class includes the Enumerable module. I just learned that Enumerable#sum can accept a block to transform enumerated values before summing, which is a shorter way to express map chained to sum. There are so many handy shortcuts in Ruby!
 
 I encourage all to learn the difference between Array and Range, especially when you need to consider performance with larger sets. One key takeaway: you often don't need to call to_a on a Range to use it like an Array.
@@ -54,4 +53,4 @@ end
 def sum_square_difference(number)
   sum_squared(number) - squared_sum(number)
 end
-=end 
+=end

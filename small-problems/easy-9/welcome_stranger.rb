@@ -26,11 +26,11 @@ Data Structure/Algo:
 
 =end
 
-# Further Exploration 
-UNION = { name: "Union", representative: "United States Army" }
+# Further Exploration
+UNION = { name: 'Union', representative: 'United States Army' }
 
 def greetings(name_arr, title_occupation_hash, organization = UNION)
-  full_name = name_arr.join(" ")
+  full_name = name_arr.join(' ')
   title = title_occupation_hash[:title]
   occupation = title_occupation_hash[:occupation]
   representative = organization[:representative]

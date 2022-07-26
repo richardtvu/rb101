@@ -61,32 +61,34 @@ Return the featured num.
 
 UPPER_LIMIT = 9_876_543_201 # * See after code for explanation.
 
-# Helper method solution: 
-# This solution, imho, is easier to arrive at because we 
+# Helper method solution:
+# This solution, imho, is easier to arrive at because we
 # break down the problem into two parts: checking if a number
-# is a featured number and incrementing our number by 14 
-# until we get the next featured number. 
+# is a featured number and incrementing our number by 14
+# until we get the next featured number.
 def featured_num?(num)
   num % 7 == 0 && num.odd? && num.digits.uniq == num.digits
 end
 
 def featured(number)
-  return "There is no possible number that fulfills those requirements." if number >= UPPER_LIMIT
+  if number >= UPPER_LIMIT
+    return 'There is no possible number that fulfills those requirements.'
+  end
 
   num = number + 1
   num += 1 until num.odd? && num % 7 == 0
 
-  until featured_num?(num)
-    num += 14
-  end
+  num += 14 until featured_num?(num)
   num
 end
 
 # More concise solution:
-# This solution takes advantage of the fact the built-in 
-# digits method and modifiers (`until`) to cut down on the number of lines needed. 
+# This solution takes advantage of the fact the built-in
+# digits method and modifiers (`until`) to cut down on the number of lines needed.
 def featured(number)
-  return "There is no possible number that fulfills those requirements." if number >= UPPER_LIMIT
+  if number >= UPPER_LIMIT
+    return 'There is no possible number that fulfills those requirements.'
+  end
 
   num = number + 1
   num += 1 until num.odd? && num % 7 == 0
@@ -95,16 +97,16 @@ def featured(number)
   num
 end
 
-# Both solutions make use of guard clauses, which are 
+# Both solutions make use of guard clauses, which are
 # early-return statements used to avoid unnecessary
-# processing when we know a given input would be invalid. 
+# processing when we know a given input would be invalid.
 
 # I came up with the upper limit by determining the max
-# number that has unique digits, 9_876_543_210, and 
-# decrementing the number until I found a featured_num. 
+# number that has unique digits, 9_876_543_210, and
+# decrementing the number until I found a featured_num.
 # Thereafter, I knew that any number equal to or greater
 # than this featured_num has no next featured number, and
-# I can return early from the program. 
+# I can return early from the program.
 
 p featured(12)
 p featured(20)            #== 21

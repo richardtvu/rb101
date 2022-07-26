@@ -8,7 +8,7 @@ LANGUAGE = 'en'
 
 # Methods
 
-def messages(message, lang=LANGUAGE)
+def messages(message, lang = LANGUAGE)
   MESSAGES[lang][message]
 end
 
@@ -37,7 +37,7 @@ def float?(input)
 end
 
 def get_valid_number(request_num)
-  num = ""
+  num = ''
   loop do
     prompt messages(request_num)
     num = gets.chomp
@@ -45,7 +45,7 @@ def get_valid_number(request_num)
     if valid_number?(num)
       break
     else
-      prompt messages("not_valid_number")
+      prompt messages('not_valid_number')
     end
   end
   num
@@ -58,47 +58,48 @@ end
 
 def operation_to_message(op)
   case op
-  when "1"
-    messages("adding")
-  when "2"
-    messages("subtracting")
-  when "3"
-    messages("multiplying")
-  when "4"
-    messages("dividing")
+  when '1'
+    messages('adding')
+  when '2'
+    messages('subtracting')
+  when '3'
+    messages('multiplying')
+  when '4'
+    messages('dividing')
   end
 end
 
 def calculate(num1, op, num2)
   case op
-  when "1"
+  when '1'
     num1 + num2
-  when "2"
+  when '2'
     num1 - num2
-  when "3"
+  when '3'
     num1 * num2
-  when "4"
+  when '4'
     num1.to_f / num2.to_f
   end
 end
 
 # Rounding floats improves user experience
 # e.g. '42.17' instead of '42.17238123803'
-def round_if_float(result, precision=2)
+def round_if_float(result, precision = 2)
   return result.round(precision) if float?(result.to_s)
+
   result
 end
 
 # MAIN program
 
-prompt messages("welcome")
-prompt messages("name")
+prompt messages('welcome')
+prompt messages('name')
 
-name = ""
+name = ''
 loop do
   name = gets.chomp
   if name.empty?
-    prompt messages("valid_name")
+    prompt messages('valid_name')
   else
     break
   end
@@ -107,17 +108,17 @@ end
 prompt "#{messages('greet')} #{name}!"
 
 loop do # main loop
-  number1 = get_valid_number("first_num")
-  number2 = get_valid_number("second_num")
+  number1 = get_valid_number('first_num')
+  number2 = get_valid_number('second_num')
 
   prompt messages('operator_prompt')
-  operator = ""
+  operator = ''
   loop do
     operator = gets.chomp
     if %w(1 2 3 4).include?(operator)
       break
     else
-      prompt messages("choices")
+      prompt messages('choices')
     end
   end
 
@@ -133,9 +134,9 @@ loop do # main loop
   result = calculate(number1, operator, number2)
 
   prompt "#{messages('result_is')} #{round_if_float(result)}"
-  prompt messages("calculate_again")
+  prompt messages('calculate_again')
   answer = gets.chomp
-  break unless answer.downcase.start_with?("y")
+  break unless answer.downcase.start_with?('y')
 end
 
-prompt messages("good_bye")
+prompt messages('good_bye')

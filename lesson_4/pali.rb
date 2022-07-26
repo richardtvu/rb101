@@ -28,36 +28,36 @@
 # end
 
 def is_palindrome?(str)
-  str == str.reverse 
-end 
+  str == str.reverse
+end
 
-def substrings(str) 
+def substrings(str)
   substrings_arr = []
   current_index = 0
   while current_index < str.length
-    substr = "" 
+    substr = ''
     string_slice = str.slice(current_index, str.size)
     string_slice.chars.each do |letter|
-      substr += letter 
+      substr += letter
       substrings_arr << substr if substr.size >= 2
-    end 
+    end
     current_index += 1
-  end 
+  end
   substrings_arr.uniq
-end 
+end
 
-def palindrome_substrings(string) 
-  palindromes = [] 
-  substrings_arr = substrings(string) 
+def palindrome_substrings(string)
+  palindromes = []
+  substrings_arr = substrings(string)
   substrings_arr.each do |substr|
     palindromes << substr if is_palindrome?(substr)
-  end 
+  end
   palindromes
-end 
+end
 
 # Test cases:
 
-p palindrome_substrings("supercalifragilisticexpialidocious") #== ["ili"]
-p palindrome_substrings("abcddcbA") #== ["bcddcb", "cddc", "dd"]
-p palindrome_substrings("palindrome") #== []
-p palindrome_substrings("") #== []
+p palindrome_substrings('supercalifragilisticexpialidocious') #== ["ili"]
+p palindrome_substrings('abcddcbA') #== ["bcddcb", "cddc", "dd"]
+p palindrome_substrings('palindrome') #== []
+p palindrome_substrings('') #== []

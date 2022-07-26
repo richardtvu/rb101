@@ -19,7 +19,7 @@ def transform_digits_numbers(digits)
   index = -1
   digits_translated = []
   while index.abs <= digits.size
-    digits_translated << digits[index] * multiplier
+    digits_translated << (digits[index] * multiplier)
     multiplier *= 10
     index -= 1
   end
@@ -98,8 +98,7 @@ def string_to_integer(str)
   sum
 end
 
-
-# Revise code again after reviewing Launch School solution: 
+# Revise code again after reviewing Launch School solution:
 
 DIGITS = {
   '0': 0, '1': 1, '2': 2, '3': 3, '4': 4,
@@ -109,7 +108,7 @@ DIGITS = {
 def string_to_integer(string)
   digits_arr = string.chars.map { |char| DIGITS[char.to_sym] }
   sum = 0
-  digits_arr.each { |digit| sum = sum * 10 + digit }
+  digits_arr.each { |digit| sum = (sum * 10) + digit }
   sum
 end
 

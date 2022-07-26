@@ -25,10 +25,10 @@ Print the resulting story.
 
 def example(word_type)
   case word_type
-  when "noun"       then "soybean"
-  when "verb"       then "eat"
-  when "adjective"  then "burly"
-  when "adverb"     then "sensuously"
+  when 'noun'       then 'soybean'
+  when 'verb'       then 'eat'
+  when 'adjective'  then 'burly'
+  when 'adverb'     then 'sensuously'
   end
 end
 
@@ -43,10 +43,10 @@ def get_valid_word(word_type)
 end
 
 def mad_libs
-  noun = get_valid_word("noun")
-  verb = get_valid_word("verb")
-  adj  = get_valid_word("adjective")
-  adv  = get_valid_word("adverb")
+  noun = get_valid_word('noun')
+  verb = get_valid_word('verb')
+  adj  = get_valid_word('adjective')
+  adv  = get_valid_word('adverb')
 
   puts %(
     You would like to #{verb} my #{adj}

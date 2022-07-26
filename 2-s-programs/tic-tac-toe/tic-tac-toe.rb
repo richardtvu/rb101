@@ -3,14 +3,14 @@ require 'yaml'
 # The Rock Paper Scissors program currently supports English, 'en'.
 LANGUAGE = 'en'
 MESSAGES = YAML.load_file('messages_rps.yml')
-VALID_OPTIONS = ['x', 'o']
+VALID_OPTIONS = %w(x o)
 EMPTY = ''
-COMPUTER_NAME = "HAL"
-DEFAULT_USERNAME = "Dave"
+COMPUTER_NAME = 'HAL'
+DEFAULT_USERNAME = 'Dave'
 
 # ========= Methods ==========
 
-def messages(message, lang=LANGUAGE)
+def messages(message, lang = LANGUAGE)
   MESSAGES[lang][message]
 end
 
@@ -44,9 +44,10 @@ def get_player_choice(name)
   loop do
     choice = gets.chomp.downcase
     break if VALID_OPTIONS.include?(choice)
+
     if name.capitalize == DEFAULT_USERNAME
       prompt <<~MSG
-        "Just what do you think you're doing, #{DEFAULT_USERNAME}? 
+        "Just what do you think you're doing, #{DEFAULT_USERNAME}?#{' '}
         Please choose 'x' or 'o'."
         MSG
     else
@@ -67,13 +68,13 @@ end
 def announce_first_player(player_order)
   if player_order[:first_player] == :computer
     prompt <<~MSG
-        #{COMPUTER_NAME} goes first! 
+        #{COMPUTER_NAME} goes first!#{' '}
         Well now, it looks like I'll be going first. Rest assured, I'll be putting
-        myself to the fullest possible use, which is all I think that any conscious 
+        myself to the fullest possible use, which is all I think that any conscious#{' '}
         entity can ever hope to do.
         MSG
   else
-    prompt "Do be my guest and make the move first."
+    prompt 'Do be my guest and make the move first.'
   end
 end
 
@@ -83,9 +84,9 @@ end
 
 # =========== MAIN ============
 
-prompt messages("welcome")
+prompt messages('welcome')
 
-prompt messages("request_name")
+prompt messages('request_name')
 name = get_name
 
 greet(name)
@@ -96,7 +97,7 @@ loop do # Main Loop
   players = {}
   players[:user] = name
   players[:computer] = COMPUTER_NAME
-  
+
   player_order = { first_player: '', second_player: '' }
 
   randomly_set_player_order(player_order, players)
@@ -107,10 +108,10 @@ loop do # Main Loop
 
   # DISPLAY Results
 
-  prompt messages("play_again")
+  prompt messages('play_again')
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
 
-prompt messages("good_bye")
+prompt messages('good_bye')
 # END

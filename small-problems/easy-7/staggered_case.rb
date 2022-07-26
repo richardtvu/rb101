@@ -20,7 +20,7 @@ Algos:
 - Return the transformed string.
 =end
 
-# Initial Solution 
+# Initial Solution
 def staggered_case(str)
   uppercase = true
   characters = str.chars.map do |char|
@@ -35,7 +35,7 @@ def staggered_case(str)
   characters.join
 end
 
-# Refactored solution 
+# Refactored solution
 def staggered_case(str)
   uppercase = false # Set to true to have 1st letter be lowercase.
   characters = str.chars.map do |char|
@@ -46,7 +46,7 @@ end
 
 # Further Exploration
 def staggered_case(str, first_letter_case = :upper)
-  first_letter_case == :upper ? uppercase = false : uppercase = true
+  uppercase = !(first_letter_case == :upper)
   characters = str.chars.map do |char|
     (uppercase = !uppercase) ? char.upcase : char.downcase
   end

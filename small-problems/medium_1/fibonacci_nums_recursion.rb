@@ -1,26 +1,26 @@
-=begin 
-Fibonacci Nums (Recursion) 
+=begin
+Fibonacci Nums (Recursion)
 
 Input: Integer, `n`
 Output: Integer
 Requirement:
-- Output the fibonnaci number corresponding to the n-th place in the Fibonacci series. 
-- The `n`-th Fib number is the sum of the Fib(n-1) and Fib(n-2) number. 
-- The Fibonacci sequence starts off at 1, 1, 2, 3... 
+- Output the fibonnaci number corresponding to the n-th place in the Fibonacci series.
+- The `n`-th Fib number is the sum of the Fib(n-1) and Fib(n-2) number.
+- The Fibonacci sequence starts off at 1, 1, 2, 3...
 
-Data Structure? 
-- Integer 
+Data Structure?
+- Integer
 
-Algo? 
-Return 1 if n is 1 or 2 
-Otherwise return the sum of the last and last last fibonacci number. 
+Algo?
+Return 1 if n is 1 or 2
+Otherwise return the sum of the last and last last fibonacci number.
 
-=end 
-def fibonacci(n) 
-  return 1 if n <= 2 
-  fibonacci(n-1) + fibonacci(n-2) 
-end 
+=end
+def fibonacci(n)
+  return 1 if n <= 2
 
+  fibonacci(n - 1) + fibonacci(n - 2)
+end
 
 p fibonacci(1)  #== 1
 p fibonacci(2)  #== 1

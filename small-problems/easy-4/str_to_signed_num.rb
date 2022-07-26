@@ -52,8 +52,6 @@ If the first character is equal to '-', then return the a negative number.
 
 # Revision after looking at LS solution. I like the case statement here for clarity and organization.
 
-
-
 def string_to_signed_integer(num_str)
   case num_str[0]
   when '-' then -string_to_integer(num_str[1..-1])
@@ -62,26 +60,25 @@ def string_to_signed_integer(num_str)
   end
 end
 
-## Further Exploration Drafting? 
+## Further Exploration Drafting?
 
 def string_to_signed_integer(num_str)
-  sign = num_str if num_str[0] == '-' || num_str[0] == '+' 
-  unsigned_num = num_str[1..-1] if sign 
+  sign = num_str if num_str[0] == '-' || num_str[0] == '+'
+  unsigned_num = num_str[1..-1] if sign
   case num_str[0]
-  when '-', '+' then 
+  when '-', '+' then
     num = string_to_integer(num_str[1..-1])
-  else           
   end
   return -num if num_str[0] == '-'
-  return num if num_str[0] == '+' 
+  return num if num_str[0] == '+'
+
   string_to_integer(num_str)
 end
 
-
 def string_to_signed_integer(string)
   result = string_to_integer(string.delete('^0-9'))
-  string[0] == '-'? -result : result 
-end 
+  string[0] == '-' ? -result : result
+end
 
 p string_to_signed_integer('4321') #== 4321
 p string_to_signed_integer('-570') #== -570

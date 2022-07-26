@@ -30,33 +30,34 @@ Code
 # Initial Solution
 def word_sizes(string)
   string.split.each_with_object(Hash.new(0)) do |word, size_freq|
-    size_freq[word.size] +=1
+    size_freq[word.size] += 1
   end
 end
 
-# One-liner. 
+# One-liner.
 def word_sizes(wrds)
   wrds.split.each_with_object(Hash.new(0)) { |wrd, cnts| cnts[wrd.size] += 1 }
 end
 
 p word_sizes('Four score and seven.') == { 3 => 1, 4 => 1, 5 => 1, 6 => 1 }
-p word_sizes('Hey diddle diddle, the cat and the fiddle!') == { 3 => 5, 6 => 1, 7 => 2 }
+p word_sizes('Hey diddle diddle, the cat and the fiddle!') == { 3 => 5, 6 => 1,
+                                                                7 => 2 }
 p word_sizes("What's up doc?") == { 6 => 1, 2 => 1, 4 => 1 }
 p word_sizes('') == {}
 
 # Postscript
-=begin 
+=begin
 
-I felt intrigued by Dr. Kaneyasu's solution, so I decided to break it down. 
+I felt intrigued by Dr. Kaneyasu's solution, so I decided to break it down.
 
-def word_sizes(str) 
+def word_sizes(str)
   str
   .split      # Split the string into different words, e.g. ["What's", "up", "doc?"]
-  .map(       # Invoke the map method on the str_arr above 
+  .map(       # Invoke the map method on the str_arr above
     &:size    # to transform each element (a word) into its size
   )           # Return a new array containing the sizes of the words
   .tally      # Return a hash that contains the sizes and the # of times the sizes show up
-end 
+end
 
-We `split` method is invoked on the string referenced by `str`, which returns an array of words. We invoke the `map` method on this array with an argument of `&:size`. On each iteration of `map`, we invoke the `size` method on each element (a word string) in the array. `map` returns a new array containing the sizes of the words. We invoke `tally` on this array of word sizes and return a hash containing the sizes and counts of those sizes. 
-=end 
+We `split` method is invoked on the string referenced by `str`, which returns an array of words. We invoke the `map` method on this array with an argument of `&:size`. On each iteration of `map`, we invoke the `size` method on each element (a word string) in the array. `map` returns a new array containing the sizes of the words. We invoke `tally` on this array of word sizes and return a hash containing the sizes and counts of those sizes.
+=end

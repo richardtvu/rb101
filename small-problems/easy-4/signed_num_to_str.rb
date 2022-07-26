@@ -17,10 +17,10 @@ Return the sign + digits.
 
 =end
 
-DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+DIGITS = %w(0 1 2 3 4 5 6 7 8 9)
 
 def integer_to_string(num)
-  num == 0 ? num_str = "0" : num_str = ""
+  num_str = num == 0 ? '0' : ''
   until num == 0
     num, remainder = num.divmod(10)
     num_str.prepend(DIGITS[remainder])
@@ -31,18 +31,19 @@ end
 # Initial Solution
 def get_sign(num)
   return '' if num == 0
-  num > 0 ? "+" : "-"
+
+  num > 0 ? '+' : '-'
 end
 
 def signed_integer_to_string(num)
   sign = get_sign(num)
   digits_str = integer_to_string(num.abs)
-  return sign + digits_str
+  sign + digits_str
 end
 
-# Further Exploraation/Refactored 
-def signed_integer_to_string(num) 
-  unsigned_num = integer_to_string(num.abs) 
+# Further Exploraation/Refactored
+def signed_integer_to_string(num)
+  unsigned_num = integer_to_string(num.abs)
   case num <=> 0
   when -1 then "-#{unsigned_num}"
   when +1 then "+#{unsigned_num}"
@@ -50,13 +51,13 @@ def signed_integer_to_string(num)
   end
 end
 
-# Post-Student Solutions Review 
-def signed_integer_to_string(num)  
+# Post-Student Solutions Review
+def signed_integer_to_string(num)
   unsigned_num = integer_to_string(num.abs)
-  return unsigned_num if num == 0 
+  return unsigned_num if num == 0
+
   get_sign(num) + unsigned_num
 end
-
 
 p signed_integer_to_string(4321) # == '+4321'
 p signed_integer_to_string(-123) # == '-123'

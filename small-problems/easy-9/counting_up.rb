@@ -1,15 +1,15 @@
-=begin 
+=begin
 
 Input: Integer
 Output: Array of Integers
-- The array of integers will include all integers from 1 to the argument. 
-- Argument >= 1. 
+- The array of integers will include all integers from 1 to the argument.
+- Argument >= 1.
 
-=end 
+=end
 
 def sequence(num)
   (1..num).to_a
-end 
+end
 
 p sequence(5)
 p sequence(3)

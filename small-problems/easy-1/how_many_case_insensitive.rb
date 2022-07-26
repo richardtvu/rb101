@@ -12,9 +12,9 @@ def count_occurrences(array)
   end
 end
 
-vehicles = [
-  'Car', 'car', 'truck', 'car', 'SUV', 'truck',
-  'motorcycle', 'motorcycle', 'car', 'truck'
-]
+vehicles = %w(
+  Car car truck car SUV truck
+  motorcycle motorcycle car truck
+)
 
 count_occurrences(vehicles)

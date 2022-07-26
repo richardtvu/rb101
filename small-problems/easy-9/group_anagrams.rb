@@ -41,8 +41,8 @@ def print_anagrams(words)
   anagram_groups.each_value { |group| p group.sort }
 end
 
-words = ['demo', 'none', 'tied', 'evil', 'dome', 'mode', 'live',
-         'fowl', 'veil', 'wolf', 'diet', 'vile', 'edit', 'tide',
-         'flow', 'neon']
+words = %w(demo none tied evil dome mode live
+           fowl veil wolf diet vile edit tide
+           flow neon)
 
 print_anagrams(words)
