@@ -1,19 +1,10 @@
-# cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, :jack, :queen, :king, :ace]
+# Deck initialization and shuffle methods.
 
-# deck = {
-#   h: cards.dup,
-#   d: cards.dup,
-#   s: cards.dup,
-#   c: cards.dup
-# }
-
-
-# p new_deck
-
+```rb
 CARDS = ((2..9).to_a + %w(J Q K A)).freeze
 SUITS = %w(Clubs Diamonds Hearts Spades).freeze
 
-def deck(suits, cards)
+def deck(suits = SUITS, cards = CARDS)
   deck = suits.map do |suit|
     [suit, cards.dup]
   end.to_h
@@ -23,4 +14,14 @@ def deck(suits, cards)
   end
 end
 
-p deck(SUITS, CARDS)
+def shuffle(deck, new_deck = [])
+  new_deck = []
+  new_deck << deck.delete(deck.sample) until deck.empty?
+  new_deck
+end
+
+deck = shuffle(deck())
+
+# Just to show what the deck looks like
+p deck
+```
