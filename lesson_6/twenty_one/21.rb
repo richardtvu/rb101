@@ -1,7 +1,5 @@
 # Twenty One - A Card Game
 
-require 'pry'
-
 CARDS = ((2..9).to_a + %w(Jack Queen King Ace)).freeze
 SUITS = %w(Clubs Diamonds Hearts Spades).freeze
 
