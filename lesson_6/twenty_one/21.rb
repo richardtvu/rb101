@@ -1,28 +1,65 @@
 # Twenty One - A Card Game
-=begin
-
-=end
 
 require 'pry'
 
-CARDS = ((2..9).to_a + %w(J Q K A)).freeze
+CARDS = ((2..9).to_a + %w(Jack Queen King Ace)).freeze
 SUITS = %w(Clubs Diamonds Hearts Spades).freeze
+
+def clear_screen
+  system('cls') || system('clear')
+end
 
 def prompt(msg)
   puts "==> #{msg}\n\n"
 end
 
-def welcome_player; end
+# Disabled this cop because I'd rather not create a YML file
+# and load up the message from there.
+def welcome_player # rubocop:disable Metrics/MethodLength
+  clear_screen
+  msg = <<~MSG
+Rules of Twenty-One
+- You start with a normal 52-card deck consisting of the 4 suits
+(hearts, diamonds, clubs, and spades), and 13 values (2, 3, 4, 5,
+6, 7, 8, 9, 10, jack, queen, king, ace).
 
+- The goal of Twenty-One is to try to get as close to 21 as possible,
+without going over. If you go over 21, it's a "bust" and you lose.
 
-# Credit: JD Fortune & Amy D.
-def deck(suits, cards)
+- Setup: the game consists of a "dealer" and a "player". Both
+participants are initially dealt 2 cards. The player can see their
+2 cards, but can only see one of the dealer's cards.
+
+- Cards 2-10 are worth their face value. Jack, Queen, and king
+are worth 10. Ace is worth 1 or 11.
+
+- Player turn: the player goes first, and can decide to either "hit"
+or "stay". A hit means the player will ask for another card. Remember
+that if the total exceeds 21, then the player "busts" and loses.
+The decision to hit or stay will depend on what the player's cards are
+and what the player thinks the dealer has. For example, if the dealer
+is showing a "10" (the other card is hidden), and the player has a "2"
+and a "4", then the obvious choice is for the player to "hit". The
+player can continue to hit as many times as they want. The turn is
+over when the player either busts or stays. If the player busts, the
+game is over and the dealer won.
+
+- Dealer turn: when the player stays, it's the dealer's turn. The
+dealer must follow a strict rule for determining whether to hit or
+stay: hit until the total is at least 17. If the dealer busts, then
+the player wins.
+MSG
+  prompt msg
+end
+
+# Credit: JD Fortune & Amy D for shuffle and deck initialization.
+def deck(suits = SUITS, cards = CARDS)
   deck = suits.map do |suit|
     [suit, cards.dup]
   end.to_h
 
   deck.keys.map.with_object([]) do |suit, new_deck|
-    new_deck << "#{suit}:#{deck[suit].pop}" until deck[suit].empty?
+    new_deck << "#{deck[suit].pop}:#{suit}" until deck[suit].empty?
   end
 end
 
@@ -30,94 +67,26 @@ def shuffle(deck)
   deck.sample(deck.size)
 end
 
-
-def random_card(deck)
-  suit = deck.keys.sample
-  suit_cards = deck[suit]
-  card = suit_cards.sample
-  [suit, card]
-end
-
-def deal!(deck, hand)
-  2.times do
-    suit, card = random_card(deck)
-    card = deck[suit].delete(card)
-
-    if hand[suit]
-      hand[suit] << [card]
-    else
-      hand[suit] = [card]
-    end
-  end
-end
-
-def deal_cards!(deck, player_cards, dealer_cards)
-  deal!(deck, player_cards)
-  deal!(deck, dealer_cards)
-
-  p player_cards
-  p dealer_cards
+def deal!(deck, hand, num_cards = 1)
+  num_cards.times.with_object(hand) { hand << deck.pop }
   nil
 end
 
-
-# CONTINUE WITH BUILDING SHOW_CARDS METHOD
-def show_cards(player_cards, dealer_cards)
-  p player_cards
-  p dealer_cards
-end
-
-
-def stay?() end
-def hit!(deck, hand) end
-def busted?(hand) end
-
-def take_turn!(deck, player_cards, dealer_cards, turn_player = :player)
-  hand = (turn_player == :player) ? player_cards : dealer_cards
-
-  loop do
-    show_cards(player_cards, dealer_cards)
-    break if stay?(turn_player)
-
-    hit!(deck, hand)
-    break if busted?(hand)
-  end
-end
-
-def play_game!(deck, player_cards, dealer_cards)
-  deal_cards!(deck, player_cards, dealer_cards)
-
-  take_turn!(deck, player_cards, dealer_cards.first)
-  take_turn!(deck, player_cards, dealer_cards, :dealer)
-end
-
-# TODO: The dealer must hit if the total value of his
-# deck is less than 17. Else, the dealer will stay.
-def dealer_choice(cards); end
-
-def user_choice(); end
-
-def stay?(choice = :user, cards = nil)
-  return dealer_choice(cards) if choice == :dealer
-
-  user_choice
-end
-
-# TODO
-def play?
-  true
+def deal_cards!(deck, player_cards, dealer_cards)
+  deal!(deck, player_cards, 2)
+  deal!(deck, dealer_cards, 2)
 end
 
 def value(card_symbol)
   case card_symbol
-  when (2..10) then card_symbol
-  when 'J', 'Q', 'K' then 10
-  when 'A' then 11
+  when '2', '3', '4', '5', '6', '7', '8', '9', '10' then card_symbol.to_i
+  when 'Jack', 'Queen', 'King' then 10
+  when 'Ace' then 11
   end
 end
 
 def num_aces(cards)
-  cards.count('A')
+  cards.count('Ace')
 end
 
 def adjust_score(score, num_aces)
@@ -131,16 +100,68 @@ def adjust_score(score, num_aces)
 end
 
 def score(cards)
-  cards = cards.values.flatten
+  faces = cards.map { |face| face.split(':').first }
+  score = faces.map { |face| value(face) }.sum
 
-  score = cards.map { |card| value(card) }.sum
+  adjust_score(score, num_aces(faces))
+end
 
-  adjust_score(score, num_aces(cards))
+def show_cards(player_cards, dealer_cards)
+  clear_screen
+  prompt 'Player'
+  prompt "#{player_cards}. Score: #{score(player_cards)}\n"
+  prompt 'Dealer'
+  prompt "#{dealer_cards}. Dealer's Score: #{score(dealer_cards)}\n"
+end
+
+def stay?(cards, turn_player)
+  case turn_player
+  when :player
+    response = nil
+    loop do
+      prompt 'Enter h/hit to hit or s/stay to stay'
+      response = gets.chomp.downcase
+      break if %w(h s hit stay).include?(response)
+
+      prompt 'Invalid response...'
+    end
+    %w(s stay).include?(response)
+  when :dealer
+    score(cards) > 16
+  end
+end
+
+def hit!(deck, hand)
+  deal!(deck, hand)
+end
+
+def busted?(hand)
+  score(hand) > 21
+end
+
+def take_turn!(deck, player_cards, dealer_cards, turn_player = :player)
+  hand = dealer_cards
+  visible_dealer_cards = hand
+
+  if turn_player == :player
+    hand = player_cards
+    visible_dealer_cards = [dealer_cards.first]
+  end
+
+  loop do
+    show_cards(player_cards, visible_dealer_cards)
+    break if stay?(hand, turn_player)
+
+    hit!(deck, hand)
+    break if busted?(hand)
+  end
 end
 
 def results(player_cards, dealer_cards)
-  player_score = score(player_cards)
-  dealer_cards = score(dealer_cards)
+  show_cards(player_cards, dealer_cards)
+
+  player_score = busted?(player_cards) ? 0 : score(player_cards)
+  dealer_cards = busted?(dealer_cards) ? 0 : score(dealer_cards)
 
   case (player_score <=> dealer_cards)
   when -1 then 'Player lost!'
@@ -149,17 +170,39 @@ def results(player_cards, dealer_cards)
   end
 end
 
+def play_game!(deck, player_cards = [], dealer_cards = [])
+  deal_cards!(deck, player_cards, dealer_cards)
+
+  take_turn!(deck, player_cards, dealer_cards)
+
+  unless busted?(player_cards)
+    take_turn!(deck, player_cards, dealer_cards,
+               :dealer)
+  end
+
+  prompt results(player_cards, dealer_cards)
+end
+
+def play?
+  response = nil
+  loop do
+    prompt 'Enter y/yes to play or n/no to exit.'
+    response = gets.chomp.downcase
+    break if %w(y yes n no).include?(response)
+
+    prompt 'Invalid response...'
+  end
+  %w(y yes).include?(response)
+end
+
 def main
   welcome_player
 
-  # TODO:
   deck = shuffle(deck())
-  player_cards = {}
-  dealer_cards = {}
 
-  play_game!(deck, player_cards, dealer_cards) if play?
+  play_game!(deck) while play?
 
-  prompt results(player_cards, dealer_cards)
+  prompt 'Good bye!'
 end
 
 main
