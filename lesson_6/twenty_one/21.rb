@@ -7,7 +7,39 @@ require 'pry'
 # TODO: Data structure to hold the cards.
 CARDS = ((2..9).to_a + %w(J Q K A)).freeze
 SUITS = %w(Clubs Diamonds Hearts Spades).freeze
-DECK = SUITS.map { |suit| [suit, CARDS.dup] }.to_h.freeze
+DECK = SUITS.map { |suit| [suit[0], CARDS.dup] }.to_h.freeze
+
+
+
+
+
+
+=begin
+ cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, :jack, :queen, :king, :ace]
+
+deck = {
+  hearts: cards.dup,
+  diamonds: cards.dup,
+  spade: cards.dup,
+  clubs: cards.dup
+}
+
+
+new_deck = []
+
+deck.keys.map do |key|
+  until deck[key].empty?
+   new_deck << "#{key}: #{deck[key].pop}"
+  end
+  new_deck
+end
+
+p new_deck
+
+
+=end
+
+
 
 def prompt(msg)
   puts "==> #{msg}\n\n"
@@ -15,9 +47,19 @@ end
 
 def welcome_player; end
 
+def shuffle(deck)
+  new_deck = []
+  until deck.empty?
+    new_deck << deck.delete(deck.sample)
+  end
+  new_deck
+end
+
 # player_cards = {
 #   'SUITS' => (2..8).to_a + ['J', 'Q', 'K', 'A'],
 # }
+
+# CONTINUE
 
 def random_card(deck)
   suit = deck.keys.sample
@@ -25,7 +67,6 @@ def random_card(deck)
   card = suit_cards.sample
   [suit, card]
 end
-
 
 def deal!(deck, hand)
   2.times do
@@ -49,15 +90,14 @@ def deal_cards!(deck, player_cards, dealer_cards)
   nil
 end
 
-# deal_cards!(DECK.dup, {}, {})
 
-
+# CONTINUE WITH BUILDING SHOW_CARDS METHOD
 def show_cards(player_cards, dealer_cards)
   p player_cards
   p dealer_cards
 end
 
-# Continue?
+
 def stay?() end
 def hit!(deck, hand) end
 def busted?(hand) end
