@@ -24,7 +24,5 @@ end
 
 deck = shuffle(deck())
 
-
 # Just to show what the deck looks like
 p deck
-
