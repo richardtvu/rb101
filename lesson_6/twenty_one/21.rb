@@ -259,6 +259,7 @@ def update_total!(player, card)
 
   total = player[:total] + value(card)
 
+  binding.pry
   # correct for Aces
   player[:total] = adjust_total(total, num_aces(player[:hand]))
 end
