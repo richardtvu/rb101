@@ -138,15 +138,14 @@ def test_show_game_result
 end
 
 def test_good_bye
-  good_bye
+  wish_player_good_bye
 end
 
 # welcome_player
-# test_good_bye
+test_good_bye
 # test_display_result
 # test_show_game_result
 # main
 
 # test_winner_of_round
 
-main

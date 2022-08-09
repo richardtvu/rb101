@@ -148,8 +148,8 @@ def display_table(players, view = 'player', width = TABLE_WIDTH)
          "\n Unadjusted Total: #{player[:unadjusted_total]}" \
          "\n Number of Aces: #{player[:num_aces]}"
 
-         # TODO remove this debugging statement for unadjusted total
-         # and the ... number of aces.
+    # TODO remove this debugging statement for unadjusted total
+    # and the ... number of aces.
 
     display_cards(player, view)
     puts "\n"
@@ -261,8 +261,6 @@ def value(card)
   end
 end
 
-
-
 # Aces start with a value of 11 and decrease in value
 # by 10 if counting the ace as 11 would cause the
 # player to bust.
@@ -273,10 +271,9 @@ def adjust_total!(player)
   aces.times { player[:total] -= 10 if player[:total] > MAX }
 end
 
-
 # Keep track of an unadjusted total alongside the current
-# adjusted total. If the player will bust, check to see
-# if we can adjust the score based on the number of aces.
+# adjusted total to make it easier to adjust the total
+# based on the number of aces.
 def update_total!(player, card)
   return unless card
 
@@ -475,11 +472,21 @@ def play_game!
   end
 end
 
-def good_bye
+def wish_player_good_bye
   clear_screen
   display_boundary('BYE!', TABLE_WIDTH, '=')
-  puts good_bye_message
+  puts cute_good_bye_message
   display_boundary('BYE!', TABLE_WIDTH, '=')
+  0.upto(6) do
+    print '.'.center(10)
+    sleep(0.5)
+  end
+
+  clear_screen
+  puts good_bye_sasuke_message
+
+  sleep(3)
+  clear_screen
 end
 
 def main
@@ -494,5 +501,5 @@ def main
     break unless player_wants_to? 'play a new game'
   end
 
-  good_bye
+  wish_player_good_bye
 end
