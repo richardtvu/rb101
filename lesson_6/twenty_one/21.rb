@@ -145,7 +145,11 @@ def display_table(players, view = 'player', width = TABLE_WIDTH)
 
     puts "\n#{player[:role]}: #{player[:name]}" \
          "\n Total: #{total}" \
-         "\n Unadjusted Total: #{player[:unadjusted_total]}" # TODO remove this debugging statement
+         "\n Unadjusted Total: #{player[:unadjusted_total]}" \
+         "\n Number of Aces: #{player[:num_aces]}"
+
+         # TODO remove this debugging statement for unadjusted total
+         # and the ... number of aces.
 
     display_cards(player, view)
     puts "\n"
@@ -257,34 +261,29 @@ def value(card)
   end
 end
 
-def adjust_total(total, player)
+
+
+# Aces start with a value of 11 and decrease in value
+# by 10 if counting the ace as 11 would cause the
+# player to bust.
+def adjust_total!(player)
   aces = player[:num_aces]
-  return total if aces < 1
+  player[:total] = player[:unadjusted_total]
 
-
-  total -= (11 * aces)
-  aces.times do
-    total += 11
-    total -= 10 if (total + 11) > MAX
-  end
-  total
+  aces.times { player[:total] -= 10 if player[:total] > MAX }
 end
 
-def ace?(card)
-  card[1] == ACE
-end
 
+# Keep track of an unadjusted total alongside the current
+# adjusted total. If the player will bust, check to see
+# if we can adjust the score based on the number of aces.
 def update_total!(player, card)
   return unless card
 
   player[:unadjusted_total] += value(card)
-  temp_total = player[:total] + value(card)
-  if temp_total > MAX
-    temp_total = adjust_total(temp_total, player) if card[1] == ACE
-    player[:total] = temp_total
-    return
-  end
-  player[:total] = temp_total
+  player[:total] += value(card)
+
+  adjust_total!(player) if player[:total] > MAX
 end
 
 def deal!(deck, player, num_cards = 1)
@@ -293,8 +292,8 @@ def deal!(deck, player, num_cards = 1)
     break unless card
 
     player[:hand] << card
-
     player[:num_aces] += 1 if card[1] == ACE
+
     update_total!(player, card)
     player[:busted] = true if busted?(player)
   end
@@ -448,6 +447,8 @@ end
 def reset_round!(players)
   players.each do |player|
     player[:total] = 0
+    player[:unadjusted_total] = 0 # DEBUGGING
+    player[:num_aces] = 0
     player[:busted] = false
     player[:hand] = []
   end
