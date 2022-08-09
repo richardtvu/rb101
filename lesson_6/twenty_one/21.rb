@@ -494,4 +494,4 @@ def main
   wish_player_good_bye
 end
 
-# main
+main
