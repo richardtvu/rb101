@@ -9,9 +9,11 @@ require_relative 'message'
 # ================== INITIALIZE CONSTANTS =====================
 
 PARTICIPANT = {
-  id: nil,
-  name: '', role: 'Player', score: 0,
-  hand: nil, total: 0, busted: false
+  id: nil,  name: '',
+  role: 'Player', score: 0,
+  hand: nil, total: 0,
+  unadjusted_total: 0,
+  busted: false, num_aces: 0
 }.freeze
 
 DEALER_NAME = 'Jack Durango Fortuna'.freeze
@@ -142,7 +144,8 @@ def display_table(players, view = 'player', width = TABLE_WIDTH)
     total = total_based_on_view(player, view)
 
     puts "\n#{player[:role]}: #{player[:name]}" \
-         "\n Total: #{total}"
+         "\n Total: #{total}" \
+         "\n Unadjusted Total: #{player[:unadjusted_total]}" # TODO remove this debugging statement
 
     display_cards(player, view)
     puts "\n"
@@ -254,28 +257,34 @@ def value(card)
   end
 end
 
+def adjust_total(total, player)
+  aces = player[:num_aces]
+  return total if aces < 1
+
+
+  total -= (11 * aces)
+  aces.times do
+    total += 11
+    total -= 10 if (total + 11) > MAX
+  end
+  total
+end
+
+def ace?(card)
+  card[1] == ACE
+end
+
 def update_total!(player, card)
   return unless card
 
-  total = player[:total] + value(card)
-
-  binding.pry
-  # correct for Aces
-  player[:total] = adjust_total(total, num_aces(player[:hand]))
-end
-
-def num_aces(cards)
-  cards.select { |card| card[1] == 'A' }.count
-end
-
-def adjust_total(total, num_aces)
-  return total if num_aces < 1
-
-  total -= (11 *  num_aces)
-  num_aces.times do
-    total += (total + 11) < MAX ? 11 : 1
+  player[:unadjusted_total] += value(card)
+  temp_total = player[:total] + value(card)
+  if temp_total > MAX
+    temp_total = adjust_total(temp_total, player) if card[1] == ACE
+    player[:total] = temp_total
+    return
   end
-  total
+  player[:total] = temp_total
 end
 
 def deal!(deck, player, num_cards = 1)
@@ -285,6 +294,7 @@ def deal!(deck, player, num_cards = 1)
 
     player[:hand] << card
 
+    player[:num_aces] += 1 if card[1] == ACE
     update_total!(player, card)
     player[:busted] = true if busted?(player)
   end
@@ -485,5 +495,3 @@ def main
 
   good_bye
 end
-
-main
