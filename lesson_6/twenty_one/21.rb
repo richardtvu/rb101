@@ -45,9 +45,9 @@ def clear_screen
 end
 
 # See 'message.rb'.
-def welcome_player(msg = welcome_message())
+def welcome_player
   clear_screen
-  puts msg
+  puts welcome_message
   puts ''
 end
 
@@ -145,11 +145,6 @@ def display_table(players, view = 'player', width = TABLE_WIDTH)
 
     puts "\n#{player[:role]}: #{player[:name]}" \
          "\n Total: #{total}" \
-         "\n Unadjusted Total: #{player[:unadjusted_total]}" \
-         "\n Number of Aces: #{player[:num_aces]}"
-
-    # TODO remove this debugging statement for unadjusted total
-    # and the ... number of aces.
 
     display_cards(player, view)
     puts "\n"
@@ -158,6 +153,74 @@ def display_table(players, view = 'player', width = TABLE_WIDTH)
   display_boundary('BOARD')
   puts "\n\n"
   display_scores(players, width)
+end
+
+def display_centered_message(msg, _width = TABLE_WIDTH)
+  puts msg.center(TABLE_WIDTH)
+  puts ''
+end
+
+def display_art(winner, player_win_art, dealer_win_art)
+  if player?(winner)
+    display_centered_message(player_win_art)
+  else
+    display_centered_message(dealer_win_art)
+  end
+end
+
+def display_end_game_art(winner)
+  display_art(winner, congrats_message, sad_dinosaur_message)
+end
+
+def show_art(phase, winner)
+  if phase == 'round'
+    display_art(winner, success_message, sad_face_message)
+  else
+    display_end_game_art(winner)
+  end
+end
+
+def display_result(players, winner, phase = 'round')
+  if phase == 'round'
+    clear_screen if phase == 'round'
+    display_scores(players, TABLE_WIDTH)
+  end
+
+  unless winner
+    display_centered_message("The #{phase} is a tie!")
+    return
+  end
+
+  msg = "#{winner[:role]} #{winner[:name]} " \
+        "is the winner of the #{phase}!\n\n"
+
+  display_centered_message(msg)
+  show_art(phase, winner)
+end
+
+def show_game_result(players, winner, width = TABLE_WIDTH)
+  clear_screen
+
+  display_boundary('END OF GAME', width, '=', :extra_space)
+  display_result(players, winner, 'game')
+  display_boundary('END OF GAME', width, '=', :extra_space)
+end
+
+def wish_player_good_bye
+  clear_screen
+  display_boundary('BYE!', TABLE_WIDTH, '=')
+  puts cute_good_bye_message
+  display_boundary('BYE!', TABLE_WIDTH, '=')
+  0.upto(6) do
+    print '.'.center(10)
+    sleep(0.5)
+  end
+
+  clear_screen
+  puts good_bye_sasuke_message
+
+  sleep(3)
+  clear_screen
 end
 
 # ------------------- Initialization Methods -------------
@@ -251,6 +314,31 @@ def winner_of_game?(players)
   end
 end
 
+def busted?(player)
+  player[:total] > 21
+end
+
+def all_busted?(players)
+  players[0...-1].all? { |player| player[:busted] }
+end
+
+def hit?(player)
+  case player[:role].downcase
+  when 'player'
+    player_wants_to? 'hit'
+  else
+    player[:total] < 17
+  end
+end
+
+def all_tied?(players)
+  return false if players.size == 1
+
+  players.all? do |player|
+    player[:total] == best_total(players)
+  end
+end
+
 # ---------------------- Deal Card Methods -----------------------
 
 def value(card)
@@ -302,23 +390,6 @@ def deal_cards!(deck, players, num_cards = 2)
   nil
 end
 
-def busted?(player)
-  player[:total] > 21
-end
-
-def all_busted?(players)
-  players[0...-1].all? { |player| player[:busted] }
-end
-
-def hit?(player)
-  case player[:role].downcase
-  when 'player'
-    player_wants_to? 'hit'
-  else
-    player[:total] < 17
-  end
-end
-
 def take_turn!(deck, players, player)
   turn = player[:role].downcase
   loop do
@@ -361,14 +432,6 @@ def best_total(players)
   end[:total]
 end
 
-def all_tied?(players)
-  return false if players.size == 1
-
-  players.all? do |player|
-    player[:total] == best_total(players)
-  end
-end
-
 def player_with_best_total(players)
   players.find do |player|
     player[:total] == best_total(players)
@@ -378,8 +441,6 @@ end
 def round_winner(players)
   players = players.reject { |player| player[:busted] }
   return player_with_best_total(players) unless all_tied?(players)
-
-  nil
 end
 
 def update_score!(round_winner)
@@ -390,61 +451,10 @@ def update_score!(round_winner)
   nil
 end
 
-def display_centered_message(msg, _width = TABLE_WIDTH)
-  puts msg.center(TABLE_WIDTH)
-  puts ''
-end
-
-def display_art(winner, player_win_art, dealer_win_art)
-  if player?(winner)
-    display_centered_message(player_win_art)
-  else
-    display_centered_message(dealer_win_art)
-  end
-end
-
-def display_end_game_art(winner)
-  display_art(winner, congrats_message, sad_dinosaur_message)
-end
-
-def show_art(phase, winner)
-  if phase == 'round'
-    display_art(winner, success_message, sad_face_message)
-  else
-    display_end_game_art(winner)
-  end
-end
-
-def display_result(players, winner, phase = 'round')
-  if phase == 'round'
-    clear_screen if phase == 'round'
-    display_scores(players, TABLE_WIDTH)
-  end
-
-  unless winner
-    display_centered_message("The #{phase} is a tie!")
-    return
-  end
-
-  msg = "#{winner[:role]} #{winner[:name]} " \
-        "is the winner of the #{phase}!\n\n"
-
-  display_centered_message(msg)
-  show_art(phase, winner)
-end
-
-def show_game_result(players, winner, width = TABLE_WIDTH)
-  clear_screen
-
-  display_boundary('END OF GAME', width, '=', :extra_space)
-  display_result(players, winner, 'game')
-  display_boundary('END OF GAME', width, '=', :extra_space)
-end
-
 def reset_round!(players)
   players.each do |player|
     player[:total] = 0
-    player[:unadjusted_total] = 0 # DEBUGGING
+    player[:unadjusted_total] = 0
     player[:num_aces] = 0
     player[:busted] = false
     player[:hand] = []
@@ -458,6 +468,7 @@ def play_game!
 
   loop do
     play_round!(players)
+
     winner = round_winner(players)
     update_score!(winner)
 
@@ -472,34 +483,15 @@ def play_game!
   end
 end
 
-def wish_player_good_bye
-  clear_screen
-  display_boundary('BYE!', TABLE_WIDTH, '=')
-  puts cute_good_bye_message
-  display_boundary('BYE!', TABLE_WIDTH, '=')
-  0.upto(6) do
-    print '.'.center(10)
-    sleep(0.5)
-  end
-
-  clear_screen
-  puts good_bye_sasuke_message
-
-  sleep(3)
-  clear_screen
-end
-
 def main
   welcome_player
 
-  return unless player_wants_to? 'play'
-
-  loop do
+  while player_wants_to? 'play a new game'
     play_game!
-
     sleep(1)
-    break unless player_wants_to? 'play a new game'
   end
 
   wish_player_good_bye
 end
+
+# main

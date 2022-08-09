@@ -75,7 +75,6 @@ end
 
 # test_display_cards
 
-
 def unadjusted_totals(player)
   card_values = player[:hand].map do |card|
     value(card)
@@ -87,7 +86,6 @@ def test_display_table(view = 'player')
   # deck = [['♠', 'A'], ['♠', 'A'], ['♠', 'A']] * 6
   players = initialize_players(2, :test)
   deal_cards!(deck, players, 6)
-
 
   display_table(players, view, 71)
 end
@@ -103,17 +101,34 @@ test_display_table
 #   binding.pry
 # end
 
-def test_winner_of_round
-  deck = initialize_deck
-  players = initialize_players(2, :test)
-  players.first[:hand] = [['♠', 'A'], ['♠', 'A'], ['♠', 'A']]
-  deal_cards!(deck, players, 1)
 
-  players.each do |player|
-    puts "#{player[:name]} #{player[:hand]}
-    #{player[:total]}"
+def test_winner_of_round(players, state)
+  deck = initialize_deck
+
+  players.first[:total] = 20
+  case (state)
+  when :win
+    players[1][:total] = 19
+  when :lose
+    players[1][:total] = 21
+  when :tie
+    players[1][:total] = 20
   end
+  # deal_cards!(deck, players, 1)
+
+  # players.each do |player|
+  #   puts "#{player[:name]} #{player[:hand]}
+  #   #{player[:total]}"
+  # end
+  # puts players
+  winner = round_winner(players)
 end
+
+# players = initialize_players(1, :test)
+# puts test_winner_of_round(players, :win) == players.first
+# # Expect nil when there's a tie.
+# puts test_winner_of_round(players, :tie) == nil
+# puts test_winner_of_round(players, :lose) == players.last
 
 def test_display_result
   deck = initialize_deck
@@ -142,10 +157,9 @@ def test_good_bye
 end
 
 # welcome_player
-test_good_bye
+# test_good_bye
 # test_display_result
 # test_show_game_result
 # main
 
 # test_winner_of_round
-
