@@ -390,6 +390,8 @@ def deal_cards!(deck, players, num_cards = 2)
   nil
 end
 
+# ------------------------- Game Play Methods --------------------
+
 def take_turn!(deck, players, player)
   turn = player[:role].downcase
   loop do
@@ -462,6 +464,8 @@ def reset_round!(players)
   sleep(1)
 end
 
+# ====================== Play Game! ===========================
+
 def play_game!
   clear_screen
   players = initialize_players
@@ -482,6 +486,8 @@ def play_game!
     break unless player_wants_to? 'continue this game'
   end
 end
+
+# =============================== MAIN =========================
 
 def main
   welcome_player
