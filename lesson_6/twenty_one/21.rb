@@ -3,8 +3,10 @@ Thanks to JD Fortune for kindly donating his design and code for
 displaying cards. JD also pointed out that an array of hashes would
 be a better data structure than an array of arrays due to less knowledge
 of implementation details required (see peer_feedback.md for more
-details and https://github.com/JDFortune/RB101/blob/main/lesson_6/twentyone/twenty_one.rb). Thanks to Amy D. for collaborating on deck design, code reviews,
-and other discussions to flesh out this code.
+details and https://github.com/JDFortune/RB101/blob/main/lesson_6/twentyone/twenty_one.rb).
+
+Thanks to Amy D. for collaborating on deck design, code reviews, and
+other discussions to flesh out this code.
 =end
 require 'pry'
 require_relative 'message'
