@@ -3,7 +3,7 @@ Thanks to JD Fortune for kindly donating his design and code for
 displaying cards. JD also pointed out that an array of hashes would
 be a better data structure than an array of arrays due to less knowledge
 of implementation details required (see peer_feedback.md for more
-details). Thanks to Amy D. for collaborating on deck design, code reviews,
+details and https://github.com/JDFortune/RB101/blob/main/lesson_6/twentyone/twenty_one.rb). Thanks to Amy D. for collaborating on deck design, code reviews,
 and other discussions to flesh out this code.
 =end
 require 'pry'
@@ -228,14 +228,11 @@ end
 
 # ------------------- Initialization Methods -------------
 
-def initialize_deck
-  arr_of_arrays = SUITS.product(VALUES).shuffle
+def initialize_shuffled_deck
+  deck = SUITS.product(VALUES).shuffle
 
-  arr_of_arrays.map do |card|
-    hash = Hash.new
-    hash[:suit] = card[0]
-    hash[:rank] = card[1]
-    hash
+  deck.map do |card|
+    { suit: card[0], rank: card[1] }
   end
 end
 
@@ -416,7 +413,7 @@ def take_turn!(deck, players, player)
 end
 
 def play_round!(players)
-  deck = initialize_deck
+  deck = initialize_shuffled_deck
 
   deal_cards!(deck, players)
   display_table(players)
