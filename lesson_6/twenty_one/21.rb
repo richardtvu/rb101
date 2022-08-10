@@ -21,7 +21,7 @@ PARTICIPANT = {
   busted: false, num_aces: 0
 }.freeze
 
-DEALER_NAME = 'Jack Durango Fortuna'.freeze
+DEALER_NAME = 'Jack Dragonchak Fortuna'.freeze
 
 SUITS = %w(♥ ♣ ♦ ♠).freeze
 VALUES = (2..9).to_a.concat(%w(J Q K A)).freeze
