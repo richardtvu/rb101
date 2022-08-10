@@ -16,7 +16,7 @@ def shuffle(deck)
   deck.sample(deck.size)
 end
 
-def shuffle(deck)
+def shuffle(deck) # rubocop:disable Lint/DuplicateMethods
   new_deck = []
   new_deck << deck.delete(deck.sample) until deck.empty?
   new_deck

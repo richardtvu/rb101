@@ -1,10 +1,7 @@
 =begin
 Thanks to JD Fortune for kindly donating his design and code for
-displaying cards. JD also pointed out that an array of hashes would
-be a better data structure than an array of arrays due to less knowledge
-of implementation details required (see peer_feedback.md for more
-details). Thanks to Amy D. for collaborating on deck design, code reviews,
-and other discussions to flesh out this code.
+displaying cards. Thanks to Amy D. for collaborating on deck
+design, code reviews, and other discussions to flesh out this code.
 =end
 require 'pry'
 require_relative 'message'
@@ -24,7 +21,7 @@ DEALER_NAME = 'Jack Durango Fortuna'.freeze
 SUITS = %w(♥ ♣ ♦ ♠).freeze
 VALUES = (2..9).to_a.concat(%w(J Q K A)).freeze
 ACE = 'A'.freeze
-HIDDEN_CARD = { suit: '?', rank: '?' }.freeze
+HIDDEN_CARD = ['?', '?'].freeze
 
 MAX = 21 # The max total value a player can have before busting.
 HIT_LIMIT = 17 # The dealer must hit until their hand is worth
@@ -61,11 +58,11 @@ end
 def card_image(card) # rubocop:disable Metrics/AbcSize
   cards = []
   cards << '+---------+'
-  cards << ("#{'|'.ljust(8)}#{card[:rank].to_s.ljust(2)}|")
+  cards << ("#{'|'.ljust(8)}#{(card[1]).to_s.ljust(2)}|")
   cards << '|         |'
-  cards << ('|'.ljust(5) + (card[:suit]).to_s + '|'.rjust(5))
+  cards << ('|'.ljust(5) + (card[0]).to_s + '|'.rjust(5))
   cards << '|         |'
-  cards << ("|#{(card[:rank]).to_s.rjust(2)}#{'|'.rjust(8)}")
+  cards << ("|#{(card[1]).to_s.rjust(2)}#{'|'.rjust(8)}")
   cards << '+---------+'
   cards
 end
@@ -229,14 +226,7 @@ end
 # ------------------- Initialization Methods -------------
 
 def initialize_deck
-  arr_of_arrays = SUITS.product(VALUES).shuffle
-
-  arr_of_arrays.map do |card|
-    hash = Hash.new
-    hash[:suit] = card[0]
-    hash[:rank] = card[1]
-    hash
-  end
+  SUITS.product(VALUES).shuffle
 end
 
 def request_name(player_num)
@@ -352,10 +342,10 @@ end
 # ---------------------- Deal Card Methods -----------------------
 
 def value(card)
-  case (card[:rank])
+  case (card[1])
   when 'A' then 11
   when 'J', 'Q', 'K' then 10
-  else card[:rank].to_i
+  else card[1].to_i
   end
 end
 
@@ -387,7 +377,7 @@ def deal!(deck, player, num_cards = 1)
     break unless card
 
     player[:hand] << card
-    player[:num_aces] += 1 if card[:rank] == ACE
+    player[:num_aces] += 1 if card[1] == ACE
 
     update_total!(player, card)
     player[:busted] = true if busted?(player)

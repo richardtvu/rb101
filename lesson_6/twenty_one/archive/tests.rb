@@ -1,4 +1,4 @@
-require_relative '21'
+require_relative 'refactor_21_ds'
 
 def test_player_wants_to?
   player_wants_to? 'hit'
@@ -34,8 +34,6 @@ def test_deal!(deck, players = nil, num_cards = 1)
   end
 end
 
-# test_deal!(initialize_deck)
-
 def test_empty_hands!(players = nil, num_cards = 2)
   deck = initialize_deck
   players.nil? ? players = initialize_players(1, :test) : players
@@ -60,8 +58,6 @@ def test_deal_cards!(deck = initialize_deck, players = nil)
   end
 end
 
-# test_deal_cards!
-
 def test_split_into_rows_of(cards, num_cards_per_row = 6)
   split_into_rows_of(num_cards_per_row, cards)
 end
@@ -73,10 +69,8 @@ def test_display_cards
   display_cards(player)
 end
 
-# test_display_cards
-
 def unadjusted_totals(player)
-  card_values = player[:hand].map do |card|
+  player[:hand].map do |card|
     value(card)
   end.sum
 end
@@ -89,8 +83,6 @@ def test_display_table(view = 'player')
 
   display_table(players, view, 71)
 end
-# TIODI HOW TO CONFIRM ADJUSTMENT?
-test_display_table
 
 # loop do
 #   test_display_table("player")
@@ -101,12 +93,9 @@ test_display_table
 #   binding.pry
 # end
 
-
 def test_winner_of_round(players, state)
-  deck = initialize_deck
-
   players.first[:total] = 20
-  case (state)
+  case state
   when :win
     players[1][:total] = 19
   when :lose
@@ -121,7 +110,7 @@ def test_winner_of_round(players, state)
   #   #{player[:total]}"
   # end
   # puts players
-  winner = round_winner(players)
+  round_winner(players)
 end
 
 # players = initialize_players(1, :test)
@@ -163,3 +152,7 @@ end
 # main
 
 # test_winner_of_round
+
+# p test_display_cards
+
+main
