@@ -8,7 +8,6 @@ details and https://github.com/JDFortune/RB101/blob/main/lesson_6/twentyone/twen
 Thanks to Amy D. for collaborating on deck design, code reviews, and
 other discussions to flesh out this code.
 =end
-require 'pry'
 require_relative 'message'
 
 # ================== INITIALIZE CONSTANTS =====================
@@ -411,6 +410,7 @@ def take_turn!(deck, players, player)
     sleep(1) if turn == 'dealer'
     display_table(players, turn)
   end
+  puts "#{player[:role]} #{player[:name]} busted!" if busted?(player)
   sleep(1)
 end
 
@@ -427,10 +427,10 @@ def play_round!(players)
   end
 
   display_table(players, 'dealer')
+  sleep(1)
 
   if all_busted?(players)
-    prompt(players.size == 2 ? 'Player busted!' : 'All players busted!')
-    sleep(1)
+    sleep(2)
     return
   end
 
@@ -458,7 +458,7 @@ def update_score!(round_winner)
   return unless round_winner
 
   round_winner[:score] += 1
-  sleep(0.5)
+  sleep(1)
   nil
 end
 
