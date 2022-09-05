@@ -1,4 +1,4 @@
-STARS = ['*', '*', '*']
+STARS = ['*', '*', '*'].freeze
 def star(length)
   center_idx = length / 2
 

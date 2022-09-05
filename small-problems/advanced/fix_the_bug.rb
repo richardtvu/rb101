@@ -8,15 +8,13 @@ Why does this code fail to produce the expected output?
 def my_method(array)
   if array.empty?
     []
-  elsif
-    array.map do |value|
-      value * value
-    end
+  elsif array.map do |value|
+          value * value
+        end
   else
     [7 * array.first]
   end
 end
-
 
 # Tests                |  Expected Output    | Actual Output
 # -------------------- | ------------------- | -------------

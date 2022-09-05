@@ -10,7 +10,7 @@ REPLACEMENT_WORDS = {
   '%{verb}' => %w(jumps lifts bites licks kicks defecates),
   '%{adverb}' => %w(easily lazily noisily excitedly magnificently
                     adorably)
-}
+}.freeze
 
 def madlib(file_path)
   lines = File.readlines(file_path, chomp: true)
