@@ -114,10 +114,29 @@ At this point, we've a nested array in which the inner-most arrays have 1 elemen
 WHILE we've subarrays
   merge a pair of sub-arrays
   order the merged sub-array
+-----
 
+P:
+I: Array
+
+Requirement:
+  - The elements of the input array will be all numbers or all strings.
+    - Why is this constraint important?
+      - This constraint allows you to use the `<=>` and compare the elements. Otherwise, we'd get an ArgumentError when trying to sort elements in the array... Or we'd need to create our own implementation of `<=>` or some sorting criteria.
+
+Algorithm:
+
+GIVEN an array.
+Split the array into a left_half and a right_half.
+When both the left_half and the right_half have less than 1 element each, we stop splitting.
+With only 1 or less elements, we now consider these left and right halves sorted.
+Merge these sorted halves.
+Return these sorted halves.
 
 =end
 
 def merge_sort(array)
 
+
 end
+
