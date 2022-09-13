@@ -15,9 +15,9 @@ Algorithm:
 - Return the string.
 =end
 
-WORDS = %w(zero one two three four five six seven eight nine)
-DIGITS = (0..9).to_a
-WORDS_TO_DIGITS = WORDS.zip(DIGITS).to_h
+NUMBER_WORDS = %w(zero one two three four five six seven eight nine) 
+DIGITS = (0..9).to_a.map(&:to_s) 
+NUMBERS_TO_DIGITS = NUMBER_WORDS.zip(DIGITS).to_
 
 # If the word includes a digit word, then transform that part of the word into a digit.
 
@@ -29,29 +29,28 @@ def contains_digit_word(word)
 end
 
 
+def digit_str?(word) 
+  !!digit_str(word) 
+end 
 
-def transform_word_digit(word)
+def number_str(word) 
+  word.gsub(/[^a-z]/, '') 
+end 
 
+def digit_str(word) 
+  number_str = number_str(word) 
+  digit_str = NUMBERS_TO_DIGITS[number_str]
+end 
 
+def word_to_digit(sentence) 
+  words = sentence.split.map do |word|
+    if digit_str?(word) 
+      word.sub(number_str(word), digit_str(word))
+    else 
+      word 
+    end 
+  end 
+  words.join(" ") 
+end 
 
-
-
-
-end
-
-p transform_word_digit("four.")
-
-def word_to_digit(str)
-  words = str.split.map do |word|
-    if WORDS_TO_DIGITS[word]
-      WORDS_TO_DIGITS[word]
-    else
-      word
-    end
-  end
-
-  words.join(" ")
-end
-
-p word_to_digit('Please call me at five five five one two three four. Thanks.') # == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
-
+p word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
