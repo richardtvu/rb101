@@ -47,3 +47,62 @@ def word_to_digit(string)
 end
 
 p word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
+
+
+# Alternative NO REGEX
+def letter?(char) 
+  return false unless char 
+
+  ('a'..'z').include?(char.downcase)
+end 
+
+def same_type?(char1, char2)
+  letter?(char1) == letter?(char2) 
+end 
+
+# p same_type?('a','z') == true 
+# p same_type?('C', '.') == false 
+
+def punctuation_and_words(sentence) 
+  strings = [] 
+  buffer_str = "" 
+
+  sentence.each_char do |char|
+    if buffer_str.empty? || same_type?(buffer_str[-1], char) 
+      buffer_str += char 
+    else 
+      strings << buffer_str
+      buffer_str = char 
+    end 
+  end 
+  strings << buffer_str
+
+  strings 
+end 
+
+# p punctuation_and_words(' four. Thanks.') == [' ', 'four', '. ', 'Thanks', '.']
+
+WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+def replace_words(sentence_components)
+  sentence_components.map do |string| 
+    str = string.downcase
+    if WORDS.index(str)
+      WORDS.index(str).to_s
+    else 
+      string 
+    end 
+  end 
+end 
+
+# p replace_words([' ', 'four', '. ', 'Thanks', '.']) == [' ', '4', '. ', 'Thanks', '.'] 
+
+def word_to_digit(sentence) 
+  sentence_components = punctuation_and_words(sentence) 
+  
+  sentence_components = replace_words(sentence_components) 
+
+  sentence_components.join("") 
+end 
+
+word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
