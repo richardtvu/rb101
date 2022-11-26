@@ -1,0 +1,8 @@
+The %{adjective} brown %{noun} %{adverb}
+%{verb} the %{adjective} yellow
+%{noun}, who %{adverb} %{verb} his
+%{noun} and looks around.
+
+The %{adjective} %{noun} %{verb} the 
+%{noun}, which %{verb} %{adverb} into 
+the mouth of the %{adjective} %{noun}. 
